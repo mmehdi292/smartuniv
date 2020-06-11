@@ -58,10 +58,10 @@ public class ModifierServlet extends HttpServlet {
 			String formation = request.getParameter("formation");
 			Module m = new Module(nom, abrModule, semester, new Formation(formation));
 			if (oa.modifierModule(m, abr)) {
-				session.setAttribute("message", "ajouter avec succes");
+				session.setAttribute("message", "modifier avec succes");
 				session.setAttribute("etat", "Succès");
 			} else {
-				session.setAttribute("message", "ajouter echoue");
+				session.setAttribute("message", "modifier echoue");
 				session.setAttribute("etat", "échoué");
 			}
 			rd = request.getRequestDispatcher("GestionModule");
@@ -87,10 +87,10 @@ public class ModifierServlet extends HttpServlet {
 			String dep = request.getParameter("dep");
 			Formation f = new Formation(nomfrm, abrfrm, spefrm, cycle, annee, dep);
 			if (oa.modifierFormation(f, abrFormation)) {
-				session.setAttribute("message", "ajouter avec succes");
+				session.setAttribute("message", "modifier avec succes");
 				session.setAttribute("etat", "Succès");
 			} else {
-				session.setAttribute("message", "ajouter echoue");
+				session.setAttribute("message", "modifier echoue");
 				session.setAttribute("etat", "échoué");
 			}
 			rd = request.getRequestDispatcher("GestionFormation");
@@ -111,10 +111,10 @@ public class ModifierServlet extends HttpServlet {
 			}
 			Vacance v = new Vacance(id, date, n);
 			if (oa.modifierVacance(v)) {
-				session.setAttribute("message", "ajouter avec succes");
+				session.setAttribute("message", "modifier avec succes");
 				session.setAttribute("etat", "Succès");
 			} else {
-				session.setAttribute("message", "ajouter echoue");
+				session.setAttribute("message", "modifier echoue");
 				session.setAttribute("etat", "échoué");
 			}
 			rd = request.getRequestDispatcher("GestionVacance");
@@ -148,13 +148,30 @@ public class ModifierServlet extends HttpServlet {
 			int idg = Integer.parseInt(request.getParameter("groupe"));
 			Seance seance = new Seance(idSeance,type1,date1,salle,b,new Groupe(idg),new Module(idm));
 			if (oa.modifierSeance(seance)) {
-				session.setAttribute("message", "ajouter avec succes");
+				session.setAttribute("message", "modifier avec succes");
 				session.setAttribute("etat", "Succès");
 			} else {
-				session.setAttribute("message", "ajouter echoue");
+				session.setAttribute("message", "modifier echoue");
 				session.setAttribute("etat", "échoué");
 			}
 			rd = request.getRequestDispatcher("GestionSeance");
+			rd.forward(request, response);
+			break;
+		case "groupe":
+			Groupe g1 = (Groupe) session.getAttribute("Groupe");
+			int idGroupe = g1.getIdGroupe();
+			int num = Integer.parseInt(request.getParameter("num"));
+			int sec = Integer.parseInt(request.getParameter("section"));
+			String abrFromation = request.getParameter("formation");
+			Groupe groupe = new Groupe(idGroupe,num,sec,new Formation(abrFromation));
+			if (oa.modifierGroupe(groupe)) {
+				session.setAttribute("message", "modifier avec succes");
+				session.setAttribute("etat", "Succès");
+			} else {
+				session.setAttribute("message", "modifier echoue");
+				session.setAttribute("etat", "échoué");
+			}
+			rd = request.getRequestDispatcher("GestionGroupe");
 			rd.forward(request, response);
 			break;
 		}

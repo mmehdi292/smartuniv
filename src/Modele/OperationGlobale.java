@@ -56,5 +56,13 @@ public class OperationGlobale {
 		bd.endConnection();
 		return v;
 	}
+	// get Groupe
+		public Groupe getGroupe(int abr) {
+			ConnectionBD bd = new ConnectionBD();
+			bd.startConnection();
+			Groupe v = bd.getGroupe(abr);
+			bd.endConnection();
+			return v;
+		}
 
 }

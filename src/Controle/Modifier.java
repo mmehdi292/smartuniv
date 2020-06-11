@@ -76,6 +76,14 @@ public class Modifier extends HttpServlet {
 				rd = request.getRequestDispatcher("/WEB-INF/EspaceAdmin/ModifierSeance.jsp");
 				rd.forward(request, response);
 			break;
+			case "groupe":
+				int idGroupe = Integer.parseInt(abr);
+				Groupe g = og.getGroupe(idGroupe);
+				session.setAttribute("Formations", og.consulterFormation());
+				session.setAttribute("Groupe", g);
+				rd = request.getRequestDispatcher("/WEB-INF/EspaceAdmin/ModifierGroupe.jsp");
+				rd.forward(request, response);
+			break;
 		}
 	}
 

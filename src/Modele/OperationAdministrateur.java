@@ -385,5 +385,30 @@ public class OperationAdministrateur {
 			bd.endConnection();
 			return groupes;
 		}
+		// ajouter groupe
+		public boolean ajouterGroupe(Groupe e) {
+			ConnectionBD bd = new ConnectionBD();
+			bd.startConnection();
+			Boolean b = bd.ajouterGroupe(e);
+			bd.endConnectionWithOutResult();
+			return b;
+		}
+		// modfier Groupe
+				public boolean modifierGroupe(Groupe e) {
+					ConnectionBD bd = new ConnectionBD();
+					bd.startConnection();
+					Boolean b = bd.modifierGroupe(e);
+					bd.endConnectionWithOutResult();
+					return b;
+				}
+				// supprimer Groupe
+				public boolean suppGroupe(int id) {
+					ConnectionBD bd = new ConnectionBD();
+					bd.startConnection();
+					Boolean b = bd.suppGroupe(id);
+					bd.endConnectionWithOutResult();
+					return b;
+				}
+
 	
 }

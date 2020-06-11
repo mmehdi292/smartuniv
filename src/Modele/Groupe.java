@@ -21,6 +21,13 @@ public class Groupe {
 		this.section = section;
 		this.formation = formation;
 	}
+	
+	public Groupe(int numGroupe, int section, Formation formation) {
+		super();
+		this.numGroupe = numGroupe;
+		this.section = section;
+		this.formation = formation;
+	}
 
 	public int getIdGroupe() {
 		return idGroupe;

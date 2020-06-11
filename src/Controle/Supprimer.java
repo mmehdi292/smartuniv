@@ -83,10 +83,23 @@ public class Supprimer extends HttpServlet {
 					session.setAttribute("etat","Succès");
 				}
 				else {
-					session.setAttribute("message","supprition echoue, il y a des etudiats etude cette formation");
+					session.setAttribute("message","supprition echoue, il y a des etudiats etude cette module");
 					session.setAttribute("etat","échoué");
 				}
 				rd = request.getRequestDispatcher("GestionSeance");
+				rd.forward(request, response);
+			break;
+			case "groupe":
+				int idGroupe = Integer.parseInt(abr);
+				if(oa.suppGroupe(idGroupe)) {
+					session.setAttribute("message","supprition avec succes");
+					session.setAttribute("etat","Succès");
+				}
+				else {
+					session.setAttribute("message","supprition echoue, il y a des etudiats etude ce groupe");
+					session.setAttribute("etat","échoué");
+				}
+				rd = request.getRequestDispatcher("GestionGroupe");
 				rd.forward(request, response);
 			break;
 		}

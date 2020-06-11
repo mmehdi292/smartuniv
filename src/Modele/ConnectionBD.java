@@ -1479,7 +1479,7 @@ public class ConnectionBD {
 			}
 			return res == 1;
 		}
-		// ---------------------------- gestion des modules ----------------------
+		// ---------------------------- gestion des Groupe ----------------------
 		// consultaion
 		public ArrayList<Groupe> consulterGroupe() {
 			ArrayList<Groupe> groupes = new ArrayList<Groupe>();
@@ -1502,4 +1502,63 @@ public class ConnectionBD {
 			return null;
 
 		}
+		// ajouter Groupe
+		public boolean ajouterGroupe(Groupe e) {
+			try {
+				PreparedStatement pre = cn.prepareStatement(
+						"INSERT INTO groupe (numGroupe,section,abrFormation) VALUES(?,?,?);");
+				pre.setInt(1, e.getNumGroupe());
+				pre.setInt(2, e.getSection());
+				pre.setString(3, e.getFormation().getAbrFormation());
+				int i = pre.executeUpdate();
+				return i == 1;
+			} catch (SQLException ex) {
+				System.out.println("SQL Error");
+			}
+			return false;
+		}
+		// get Groupe
+				public Groupe getGroupe(int abr) {
+					try {
+						result = state.executeQuery("SELECT * FROM groupe WHERE idGroupe  = '" + abr + "' ;");
+						if (result.next() == false) {
+							return null;
+						}
+						int id =result.getInt(1);
+						int num =result.getInt(2);
+						int sec =result.getInt(3);
+						String abrFormation = result.getString(4);
+						return new Groupe(id,num,sec,new Formation(abrFormation));
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					return null;
+				}
+				// modifier Groupe
+				public boolean modifierGroupe(Groupe e) {
+					try {
+						PreparedStatement pre = cn.prepareStatement(
+								"UPDATE groupe SET numGroupe =? , section =? , abrFormation =? WHERE idGroupe = ?;");
+						pre.setInt(1, e.getNumGroupe());
+						pre.setInt(2, e.getSection());
+						pre.setString(3, e.getFormation().getAbrFormation());
+						pre.setInt(4, e.getIdGroupe());
+						int x = pre.executeUpdate();
+						return x == 1;
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+					return false;
+				}
+				// supp Groupe
+				public boolean suppGroupe(int id) {
+					int res = 0;
+					try {
+						String sql = "DELETE FROM groupe WHERE idGroupe  like \"" + id + "\";";
+						res = state.executeUpdate(sql);
+					} catch (SQLException e) {
+						System.out.println("SQL");
+					}
+					return res == 1;
+				}
 }
