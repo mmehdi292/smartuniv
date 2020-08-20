@@ -12,6 +12,11 @@ public class Seance {
 	private Groupe groupe;
 	private Module module;
 	private ArrayList<Absence> absences;
+	
+	public Seance(int idSeance) {
+		super();
+		this.idSeance = idSeance;
+	}
 	public Seance(int idSeance, TypeSeance type, Date temp, int salle, boolean avoirAbs, Groupe groupe, Module module) {
 		super();
 		this.idSeance = idSeance;

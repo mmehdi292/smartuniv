@@ -508,6 +508,15 @@ td a .fas:hover {
 	color:#fff;
 	background-color: #3FBB8C;
 }
+.mbtn1{
+	color:#3FBB8C;
+	font-size: 16px;
+	width: auto;
+}
+.mbtn1:hover{
+	color:#fff;
+	background-color: #3FBB8C;
+}
 .alert-info a{
 	color:#3FBB8C;
 	float: none;

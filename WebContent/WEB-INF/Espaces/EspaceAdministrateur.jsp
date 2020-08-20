@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/template/header.jsp" />
-<title>Gestion administrateurs</title>
+<title>Espace administrateur</title>
 </head>
 
 <body>

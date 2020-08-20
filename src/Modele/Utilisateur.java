@@ -17,6 +17,20 @@ public class Utilisateur {
 	private SituationFamiliale situationFamiliale;
 	private InputStream photo;
 	public Utilisateur() {}
+	
+	public Utilisateur(String username) {
+		super();
+		this.username = username;
+	}
+	
+
+	public Utilisateur(String nom, String prenom, String username) {
+		super();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.username = username;
+	}
+
 	public Utilisateur(String nom, String prenom, String username, String email, String motDePass, Date dn, String ln,
 			Sexe sexe, String adresse, SituationFamiliale situationFamiliale, InputStream  photo) {
 		super();

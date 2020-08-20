@@ -10,6 +10,20 @@ public class Etudiant extends Utilisateur {
 		super(nom, prenom, username, email, motDePass, dn, ln, sexe, adresse, situationFamiliale, photo);
 		this.formation = formation;
 	}
+	
+	
+	public Etudiant(String username) {
+		super(username);
+	}
+	
+
+
+	public Etudiant(String nom, String prenom, String username) {
+		super(nom, prenom, username);
+	}
+
+
+
 	private Formation formation;
 	private ArrayList<Module> modules; //Dans le cas o� l'�tudiant a des modules pour le retudier (progression)
 	private ArrayList<Groupe> groupes;//Dans le cas de plusieurs groupe(groupe simple , groupe progression , groupe atlier)
