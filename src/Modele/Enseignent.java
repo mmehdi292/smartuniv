@@ -8,6 +8,11 @@ public class Enseignent extends Utilisateur {
 	private Grade garde;
 	private Map<Module,Groupe> Enseignentment;
 	public Enseignent() {}
+	
+	public Enseignent(String username) {
+		super(username);
+	}
+
 	public Enseignent(String nom, String prenom, String username, String email, String motDePass, Date dn, String ln,
 			Sexe sexe, String adresse, SituationFamiliale situationFamiliale, InputStream  photo, Grade garde) {
 		super(nom, prenom, username, email, motDePass, dn, ln, sexe, adresse, situationFamiliale, photo);

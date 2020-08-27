@@ -15,7 +15,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class ConnectionBD {
 	public Connection cn;
@@ -1768,8 +1771,7 @@ public class ConnectionBD {
 	}
 	public boolean insertJustification(int idabsence,InputStream photo) {
 		try {
-				PreparedStatement pre = cn
-						.prepareStatement("UPDATE absence SET justification = ? WHERE idAbsence = ?");
+				PreparedStatement pre = cn.prepareStatement("UPDATE absence SET justification = ? WHERE idAbsence = ?");
 				pre.setBinaryStream(1, photo);
 				pre.setInt(2, idabsence);
 			
@@ -1817,4 +1819,286 @@ public class ConnectionBD {
 		}
 		return null;
 	}
+	public  ArrayList<Absence> getAbsenceParUsername(String username){
+		ArrayList<Absence> s = new ArrayList<Absence>();
+		try {
+			result = state.executeQuery("SELECT * FROM absence a, Etudiant e, seance s WHERE a.username='"+username+"' AND e.username = a.username AND s.idseance = a.idseance ;");
+			while (result.next()) {
+				int idAbsence = result.getInt("idAbsence");
+				int idseance = result.getInt("idseance");
+				boolean justifier = result.getBoolean("justifier");
+				InputStream photo = result.getBinaryStream("justification");
+				String nom = result.getString("nom");
+				String prenom = result.getString("prenom");
+				String t = result.getString("type");
+				TypeSeance type = TypeSeance.COUR;
+				switch (t) {
+				case "TD":
+					type = TypeSeance.TD;
+					break;
+				case "TP":
+					type = TypeSeance.TP;
+					break;
+				}
+				Date date = result.getTimestamp("temp");
+				int salle = result.getInt("salle");
+				boolean avoirAbs = result.getBoolean("avoirAbs");
+				int idGroupe = result.getInt("idGroupe");
+				String abrModule = result.getString("abrModule");
+
+			
+				Absence a = new Absence(idAbsence,justifier,new Seance(idseance,type,date,salle,avoirAbs,new Groupe(idGroupe),new Module(abrModule)),photo,new Etudiant(nom,prenom,username));
+				s.add(a);
+			}
+			return s;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	//touts les module d'in departement
+	public ArrayList<Module> getModuleDeDepartement(String nomDepartement){
+		ArrayList<Module> s = new ArrayList<Module>();
+		try {
+			result = state.executeQuery("SELECT * FROM module m, formation f WHERE m.abrFormation = f.abrFormation AND Departement = '"+nomDepartement+"';");
+			while (result.next()) {
+				String nomModule = result.getString("nomModule");
+				String abrModule = result.getString("abrModule");
+				int semester = result.getInt("semester");
+				String abrFormation = result.getString("abrFormation");
+				String nomFormation = result.getString("nomFormation");
+				String specialite = result.getString("specialite");
+				String c = result.getString("cycle");
+				Cycle cycle = Cycle.licence;
+				switch (c) {
+				case "master":
+					cycle = Cycle.master;
+					break;
+				}
+				int annee = result.getInt("annee");
+				Module m = new Module(nomModule,abrModule,semester,new Formation(nomFormation,abrFormation,specialite,cycle,annee,nomDepartement));
+				s.add(m);
+			}
+			return s;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	//get types d'un module
+	public ArrayList<String> getTypes(String abrModule){
+		ArrayList<String> s = new ArrayList<String>();
+		try {
+			result = state.executeQuery("SELECT distinct type FROM module m,seance s WHERE m.abrModule = s.abrModule AND s.abrModule='"+abrModule+"';");
+			while (result.next()) {
+				String type = result.getString("type");
+				s.add(type);
+			}
+			return s;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	//get all groupes for one module
+	public ArrayList<Groupe> getGroupesDunModule(String abrModule){
+		ArrayList<Groupe> s = new ArrayList<Groupe>();
+		try {
+			result = state.executeQuery("SELECT * FROM groupe g,formation f, Module m WHERE g.abrFormation=f.abrFormation AND f.abrFormation = m.abrFormAtion AND m.abrModule = '"+abrModule+"';");
+			while (result.next()) {
+				int idGroupe = result.getInt("idGroupe");
+				int numGroupe = result.getInt("numGroupe");
+				int section = result.getInt("section");
+				String abrFormation = result.getString("abrFormation");
+				Groupe g = new Groupe(idGroupe,numGroupe,section,new Formation(abrFormation));
+				s.add(g);
+			}
+			return s;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	//faire affectations 
+	public boolean faireAffectation(String username,String abrModule,int idgroupe,String type) {
+		try {
+			PreparedStatement pre = cn.prepareStatement("INSERT INTO enseignentmodulesgroupe values(?,?,?,?);");
+			pre.setString(1, username);
+			pre.setString(2, abrModule);
+			pre.setInt(3, idgroupe);
+			pre.setString(4, type);
+			int i = pre.executeUpdate();
+			return i==1;
+			
+		}
+		catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+		return false;
+	}
+	//les ensignant deja affecter
+	public ArrayList<EnseiModuleGroupe> getAffectationDunModule(String abrModule){
+		ArrayList<EnseiModuleGroupe> s = new ArrayList<EnseiModuleGroupe>();
+		try {
+			result = state.executeQuery("SELECT * FROM enseignentmodulesgroupe WHERE abrModule = '"+abrModule+"';");
+			while (result.next()) {
+				int idGroupe = result.getInt("idGroupe");
+				String username = result.getString("username");
+				String t = result.getString("type");
+				t=t.toUpperCase();
+				TypeSeance type = TypeSeance.COUR;
+				switch (t) {
+				case "TD":
+					type = TypeSeance.TD;
+					break;
+				case "TP":
+					type = TypeSeance.TP;
+					break;
+				}
+				EnseiModuleGroupe e = new EnseiModuleGroupe(new Enseignent(username) ,new Module(abrModule),new Groupe(idGroupe),type);
+				s.add(e);
+			}
+			return s;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	//delete les affectattion d'un modules
+	public boolean deleteAffectataion(String abrModule) {
+		try {
+			int res = state.executeUpdate("DELETE FROM enseignentmodulesgroupe WHERE abrModule = '"+abrModule+"'; ");
+			return res==1;
+		}
+		catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+		return false;
+	}
+	//
+	public ArrayList<Seance> getETmp(String username)  {
+		ArrayList<Seance> ars=new ArrayList<Seance>();
+		Calendar cal = Calendar.getInstance();
+		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+		int hourOfDay = cal.get(Calendar.HOUR_OF_DAY);
+		System.out.println("dayOfWeek : "+dayOfWeek+" --  hourOfDay: "+ hourOfDay);
+		String startDate = "", endDate = "";			
+		Calendar c = GregorianCalendar.getInstance();
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+		if(dayOfWeek==6||dayOfWeek==7||(dayOfWeek==5&&hourOfDay>=16)){
+			if(dayOfWeek==5&&hourOfDay>=16) c.add(Calendar.DATE, 3);
+			if(dayOfWeek==6) c.add(Calendar.DATE, 2);
+			if(dayOfWeek==7) c.add(Calendar.DATE, 1);
+			startDate = df.format(c.getTime());
+			c.add(Calendar.DATE, 4);
+			endDate = df.format(c.getTime());
+		}
+		else {
+			if(dayOfWeek==2) c.add(Calendar.DATE, -1);
+			if(dayOfWeek==3) c.add(Calendar.DATE, -2);
+			if(dayOfWeek==4) c.add(Calendar.DATE, -3);
+			if(dayOfWeek==5) c.add(Calendar.DATE, -4);
+
+			startDate = df.format(c.getTime());
+			c.add(Calendar.DATE, 4);
+			endDate = df.format(c.getTime());
+			System.out.println("Start Date = " + startDate);
+			System.out.println("End Date = " + endDate);}
+		
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			Date d=null;
+			TypeSeance ty = null;
+		try {
+			result=state.executeQuery("select type,temp,salle,abrModule from seance,etudiant,groupe,groupeetudiant where etudiant.username=groupeetudiant.username and groupeetudiant.idGroupe=groupe.idGroupe and groupe.idGroupe=seance.idGroupe and etudiant.username=\""+username+"\" and temp between \'"+startDate+" 08:30:00\' and \'"+endDate+" 14:30:00\';");
+			while(result.next()==true) {
+				String t=result.getString(1);
+				String temp=result.getString(2);
+				d=sdf.parse(temp);
+				int salle=result.getInt(3);
+				String abrModule=result.getString(4);
+				switch (t) {
+				case "COUR":
+					ty = TypeSeance.COUR;
+				case "TD":
+					ty = TypeSeance.TD;
+					break;
+				case "TP":
+					ty = TypeSeance.TP;
+					break;
+				}
+				ars.add(new Seance(ty,d,salle,new Module(abrModule)));
+			}
+		} catch (SQLException e) {
+			System.out.println("sqlException");
+		} catch (ParseException e) {
+			System.out.println("parseException");
+			e.printStackTrace();
+		}			
+		return ars;
+	}
+	//
+
+	public ArrayList<Seance> getETmpEns(String username)  {
+		ArrayList<Seance> ars=new ArrayList<Seance>();
+		Calendar cal = Calendar.getInstance();
+		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+		int hourOfDay = cal.get(Calendar.HOUR_OF_DAY);
+		System.out.println("dayOfWeek : "+dayOfWeek+" --  hourOfDay: "+ hourOfDay);
+		String startDate = "", endDate = "";			
+		Calendar c = GregorianCalendar.getInstance();
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+		if(dayOfWeek==6||dayOfWeek==7||(dayOfWeek==5&&hourOfDay>=16)){
+			if(dayOfWeek==5&&hourOfDay>=16) c.add(Calendar.DATE, 3);
+			if(dayOfWeek==6) c.add(Calendar.DATE, 2);
+			if(dayOfWeek==7) c.add(Calendar.DATE, 1);
+			startDate = df.format(c.getTime());
+			c.add(Calendar.DATE, 4);
+			endDate = df.format(c.getTime());
+			System.out.println("Start Date = " + startDate);
+			System.out.println("End Date = " + endDate);
+		}
+		else {
+			if(dayOfWeek==2) c.add(Calendar.DATE, -1);
+			if(dayOfWeek==3) c.add(Calendar.DATE, -2);
+			if(dayOfWeek==4) c.add(Calendar.DATE, -3);
+			if(dayOfWeek==5) c.add(Calendar.DATE, -4);
+
+			startDate = df.format(c.getTime());
+			c.add(Calendar.DATE, 4);
+			endDate = df.format(c.getTime());
+			System.out.println("Start Date = " + startDate);
+			System.out.println("End Date = " + endDate);}
+		
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			Date d=null;
+			TypeSeance ty = null;
+
+		try {
+			result=state.executeQuery("select type,temp,salle,module.abrmodule,numgroupe from seance,groupe,module,enseignent,enseignentmodulesgroupe where enseignent.username=enseignentmodulesgroupe.username and module.abrmodule=enseignentmodulesgroupe.abrmodule and groupe.idgroupe=enseignentmodulesgroupe.idgroupe and seance.idgroupe=groupe.idgroupe and module.abrmodule=seance.abrmodule and enseignent.username=\""+username+"\" and temp between \'"+startDate+" 08:30:00\' and \'"+endDate+" 14:30:00\';");
+			while(result.next()==true) {
+				String t=result.getString(1);
+				Date temp=result.getDate(2);
+				int salle=result.getInt(3);
+				String abrModule=result.getString(4);
+				int numGroupe=result.getInt(5);
+				switch (t) {
+				case "COUR":
+					ty = TypeSeance.COUR;
+				case "TD":
+					ty = TypeSeance.TD;
+					break;
+				case "TP":
+					ty = TypeSeance.TP;
+					break;
+				}
+				System.out.println("numGroupe");
+				Seance s = new Seance(ty,temp,salle,new Module(abrModule));
+				ars.add(s);
+			}
+		} catch (SQLException e) {
+			System.out.println("sqlException");
+		}
+		return ars;
+	}
+
 }

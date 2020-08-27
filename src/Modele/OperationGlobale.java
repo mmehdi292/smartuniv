@@ -20,6 +20,14 @@ public class OperationGlobale {
 		bd.endConnection();
 		return etudiant;
 	}
+	// get ChefDepartement
+		public ChefDepartement getChefDepartemnt(String username) {
+			ConnectionBD bd = new ConnectionBD();
+			bd.startConnection();
+			ChefDepartement chef = bd.getChefDepartement(username);
+			bd.endConnection();
+			return chef;
+		}
 
 	// get module
 	public Module getModule(String abr) {

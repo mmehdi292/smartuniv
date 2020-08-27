@@ -1,29 +1,27 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:include page="/WEB-INF/template/header.jsp" />
+<title>Espace Etudiant</title>
 </head>
+
 <body>
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Espace chef</a>
-			</div>
-			<ul class="nav navbar-nav">
-				<li><a href="#">Consulter l'emploi de temps</a></li>
-				<ul>
-					<a href="#">Gerer les justification</a>
-					<li><a href="#">Justifier une absence</a></li>
-					<li><a href="#">Consulter la justification</a></li>
-				</ul>
-				<li><a href="#">Consulter le profil</a></li>
-				<li><a href="#">Modifier le profile</a></li>
-				<li><a href="logout">Deconneter</a></li>
-			</ul>
+	<jsp:include page="/WEB-INF/template/etudiantSide.jsp" />
+	<!--content start-->
+	<div class="content">
+		<jsp:include page="/WEB-INF/template/topnavbar.jsp" />
+		<jsp:include page="/WEB-INF/template/message.jsp" />
+		
+		<!--top navbar end-->
+
+		<!--title page with add button start-->
+		<div class="titlePage">
+			<h2>Espace Etudiant</h2>
 		</div>
-	</nav>
-</body>
-</html>
+		
+		<!--footer start-->
+		<div class="footer">
+			<p>tous les droits sont réservés © 2020</p>
+		</div>
+		<!--sidebar end-->
+	</div>
+	<!--sidebar end-->
+	<jsp:include page="/WEB-INF/template/footer.jsp" />

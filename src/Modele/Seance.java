@@ -36,6 +36,14 @@ public class Seance {
 		this.groupe = groupe;
 		this.module = module;
 	}
+	
+	public Seance(TypeSeance type, Date temp, int salle, Module module) {
+		super();
+		this.type = type;
+		this.temp = temp;
+		this.salle = salle;
+		this.module = module;
+	}
 	public int getIdSeance() {
 		return idSeance;
 	}
