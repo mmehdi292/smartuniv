@@ -56,7 +56,7 @@
 				    var t4 = 0;
 				    var t5 = 0;
 					
-					fetch('http://localhost:8080/SMART_UNIV/api/Responable/AbsenceInfo/l3gl').then(
+					fetch('http://localhost:8080/SMART_UNIV/api/Responable/AbsenceInfo/${abrForamtion}').then(
 							function(response) {
 							      if (!response.ok) {
 							        throw new Error("HTTP error, status = " + response.status);

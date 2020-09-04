@@ -523,6 +523,7 @@ public class ConnectionBD {
 			}
 			String adresse = result.getString(9);
 			String situationFamiliale = result.getString(10);
+			System.out.println(situationFamiliale+"   kokokok");
 			SituationFamiliale s = SituationFamiliale.célibataire;
 			switch (situationFamiliale) {
 			case "célibataire":

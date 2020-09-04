@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 
 import Modele.ConnectionBD;
+import Modele.ResponsableDeFormation;
 import Modele.blocked;
 
 /**
@@ -62,7 +63,11 @@ public class Login extends HttpServlet {
 			}
 			if(bd.isResponsableDeFormationByEmail(user, password)||bd.isResponsableDeFormationByUsername(user, password)) {
 				role.add("ResponsableDeFormation");
-				
+				ResponsableDeFormation r = bd.getResponsableDeFormation(user);
+				String abr = r.getFormation().getAbrFormation();
+				System.out.println("----------------");
+				System.out.println(r.getUsername());
+				session.setAttribute("abrForamtion",abr);
 			}
 			if(bd.isEtudiantByEmail(user, password)||bd.isEtudiantByUsername(user, password)) {
 				role.add("Etudiant");
