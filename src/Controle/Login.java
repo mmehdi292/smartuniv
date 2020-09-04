@@ -62,6 +62,7 @@ public class Login extends HttpServlet {
 			}
 			if(bd.isResponsableDeFormationByEmail(user, password)||bd.isResponsableDeFormationByUsername(user, password)) {
 				role.add("ResponsableDeFormation");
+				
 			}
 			if(bd.isEtudiantByEmail(user, password)||bd.isEtudiantByUsername(user, password)) {
 				role.add("Etudiant");

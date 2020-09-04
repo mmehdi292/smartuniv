@@ -54,5 +54,46 @@ public class OperationChefDepartement {
 			boolean b = bd.deleteAffectataion(abrModule);
 			bd.endConnectionWithOutResult();
 			return b;
+	}
+	// get les affectation d'un module
+	public ArrayList<Groupe> getGroupeDeDepartement(String nomDepartement){
+			ConnectionBD bd = new ConnectionBD();
+			bd.startConnection();
+			ArrayList<Groupe> b = bd.getGroupeDeDepartement(nomDepartement);
+			bd.endConnection();
+			return b;
+	}
+	// get touts les etudiants d'un formation
+	public ArrayList<Etudiant> getToutsLesEtudiants(String abrForamtion) {
+				ConnectionBD bd = new ConnectionBD();
+				bd.startConnection();
+				ArrayList<Etudiant> b = bd.getToutsLesEtudiants(abrForamtion);
+				bd.endConnection();
+				return b;
+	}
+	////
+	// delete les affectations d'un groupe
+		public boolean suppAffectationEtudaint(int idgroupe) {
+				ConnectionBD bd = new ConnectionBD();
+				bd.startConnection();
+				boolean b = bd.suppAffectationEtudaint(idgroupe);
+				bd.endConnectionWithOutResult();
+				return b;
+		}
+		// faire les affectations d'un groupes
+		public boolean faireAffectationDesGroupeAuxEtudiant(String username,int idgroupe) {
+				ConnectionBD bd = new ConnectionBD();
+				bd.startConnection();
+				boolean b = bd.faireAffectationDesGroupeAuxEtudiant(username,idgroupe);
+				bd.endConnectionWithOutResult();
+				return b;
+		}
+		// get les affectation d'un groupe
+		public ArrayList<Etudiant> getAffectationDunGroupe(int idGroupe){
+			ConnectionBD bd = new ConnectionBD();
+			bd.startConnection();
+			ArrayList<Etudiant> b = bd.getAffectationDunGroupe(idGroupe);
+			bd.endConnectionWithOutResult();
+			return b;
 		}
 }

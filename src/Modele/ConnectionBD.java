@@ -2100,5 +2100,236 @@ public class ConnectionBD {
 		}
 		return ars;
 	}
+	//les groupe d'un departement
+	public ArrayList<Groupe> getGroupeDeDepartement(String nomDepartement){
+		ArrayList<Groupe> s = new ArrayList<Groupe>();
+		try {
+			result = state.executeQuery("select * from groupe g, formation f where f.abrFormation = g.abrFormation AND f.Departement = '"+nomDepartement+"';");
+			while (result.next()) {
+				int idGroupe = result.getInt("idGroupe");
+				int numGroupe = result.getInt("numGroupe");
+				int section = result.getInt("section");
+				String abrFormation = result.getString("abrFormation");
+				String nomFormation = result.getString("nomFormation");
+				String specialite = result.getString("specialite");
+				String c = result.getString("cycle");
+				Cycle cycle = Cycle.licence;
+				switch (c) {
+				case "master":
+					cycle = Cycle.master;
+					break;
+				}
+				int annee = result.getInt("annee");
+				Groupe m = new Groupe(idGroupe,numGroupe,section,new Formation(nomFormation,abrFormation,specialite,cycle,annee,nomDepartement));
+				s.add(m);
+			}
+			return s;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	// get touts les etudiants d'un groupe
+		public ArrayList<Etudiant> getToutsLesEtudiants(String abrForamtion) {
+			ArrayList<Etudiant> etudiants = new ArrayList<Etudiant>();
+			try {
+				result = state.executeQuery("SELECT * FROM etudiant e, formation f WHERE f.abrFormation = e.abrFormation AND e.abrFormation = '"+abrForamtion+"';");
+				while (result.next()) {
+					String username = result.getString(1);
+					String nom = result.getString(2);
+					String prenom = result.getString(3);
+					String email = result.getString(4);
+					String pass = result.getString(5);
+					Date dn = result.getDate(6);
+					String ln = result.getString(7);
+					String sexe = result.getString(8);
+					Sexe e = Sexe.Femme;
+					if (sexe.equalsIgnoreCase("Homme")) {
+						e = Sexe.Homme;
+					}
+					String adresse = result.getString(9);
+					String situationFamiliale = result.getString(10);
+					SituationFamiliale s = SituationFamiliale.célibataire;
+					switch (situationFamiliale) {
+					case "célibataire":
+						s = SituationFamiliale.célibataire;
+						break;
+					case "divorcé":
+						s = SituationFamiliale.divorcé;
+						break;
+					case "marié":
+						s = SituationFamiliale.marié;
+						break;
+					case "séparé":
+						s = SituationFamiliale.séparé;
+						break;
+					case "veuf":
+						s = SituationFamiliale.veuf;
+						break;
+					}
+					InputStream f = result.getBinaryStream(11);
+					String abr = result.getString(12);
+					Etudiant en = new Etudiant(nom, prenom, username, email, pass, dn, ln, e, adresse, s, f,
+							new Formation(abr));
+					etudiants.add(en);
+				}
+				return etudiants;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		// affecter les etudiants
+		public boolean faireAffectationDesGroupeAuxEtudiant(String username,int idgroupe) {
+			try {
+				PreparedStatement pre = cn.prepareStatement("INSERT INTO groupeetudiant values(?,?);");
+				pre.setString(1, username);
+				pre.setInt(2, idgroupe);
+				int i = pre.executeUpdate();
+				return i==1;
+				
+			}
+			catch(SQLException ex) {
+				ex.printStackTrace();
+			}
+			return false;
+		}
+		// supp affectations les etudiants d un groupe
+		public boolean suppAffectationEtudaint(int idgroupe) {
+					try {
+						PreparedStatement pre = cn.prepareStatement("DELETE FROM groupeetudiant WHERE idGroupe = ? ;");
+						pre.setInt(1, idgroupe);
+						int i = pre.executeUpdate();
+						return i==1;
+						
+					}
+					catch(SQLException ex) {
+						ex.printStackTrace();
+					}
+					return false;
+				}
+		//les etudiants deja affecter
+		public ArrayList<Etudiant> getAffectationDunGroupe(int idGroupe){
+			ArrayList<Etudiant> s = new ArrayList<Etudiant>();
+			try {
+				result = state.executeQuery("SELECT * FROM groupeetudiant g , Eutdiant e WHERE g.username = e.username and idGroupe = '"+idGroupe+"';");
+				while (result.next()) {
+					
+					String username = result.getString("username");
+					String nom = result.getString("nom");
+					String prenom = result.getString("prenom");
+					Etudiant e = new Etudiant(nom,prenom,username);
+					s.add(e);
+				}
+				return s;
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+			return null;
+		}
+		// les statistiques responsable de formation
+		public ArrayList<Absence> toutsLesAbsence(String abrFormation){
+			ArrayList<Absence> s = new ArrayList<Absence>();
+			try {
+				result = state.executeQuery("SELECT * FROM absence a, etudiant e, groupe g, seance s, module m, formation f WHERE a.idseance = s.idseance AND a.username = e.username AND g.idgroupe = s.idgroupe AND s.abrModule = m.abrModule AND m.abrFormation=f.abrFormation AND f.abrFormation = '"+abrFormation+"';");
+				while (result.next()) {
+					int idAbsence = result.getInt("idAbsence");
+					Boolean justifier = result.getBoolean("justifier");
+					int idSeance = result.getInt("idSeance");
+					
+					String t = result.getString("type");
+					TypeSeance type = TypeSeance.COUR;
+					switch (t) {
+					case "TD":
+						type = TypeSeance.TD;
+						break;
+					case "TP":
+						type = TypeSeance.TP;
+						break;
+					}
+					Date date = result.getTimestamp("temp");
+					int salle = result.getInt("salle");
+					boolean avoirAbs = result.getBoolean("avoirAbs");
+					int idGroupe = result.getInt("idGroupe");
+					
+					
+					int numGroupe = result.getInt("numGroupe");
+					int section = result.getInt("section");
+					
+					
+					//String abrFormation = result.getString("abrFormation");
+					String nomFormation = result.getString("nomFormation");
+					String specialite = result.getString("specialite");
+					String c = result.getString("cycle");
+					Cycle cycle = Cycle.licence;
+					switch (c) {
+					case "master":
+						cycle = Cycle.master;
+						break;
+					}
+					int annee = result.getInt("annee");
+					String Departement = result.getString("Departement");
+					Formation f = new Formation(nomFormation,abrFormation,specialite,cycle,annee,Departement);
+					Groupe g = new Groupe(idGroupe,numGroupe,section,f);
+					String nomModule = result.getString("nomModule");
+					String abrModule = result.getString("abrModule");
+					int semester = result.getInt("semester");
+					Module m = new Module(nomModule,abrModule,semester,f);
+					
+					
+					
+					
+					
+					InputStream justification = result.getBinaryStream("justification");
+					String username = result.getString("username");
+					
+					String nom = result.getString("nom");
+					String prenom = result.getString("prenom");
+					String email = result.getString("email");
+					
+					Date dn = result.getDate("dn");
+					String ln = result.getString("ln");
+					String sexe = result.getString("sexe");
+					Sexe e = Sexe.Femme;
+					if (sexe.equalsIgnoreCase("Homme")) {
+						e = Sexe.Homme;
+					}
+					String adresse = result.getString("adresse");
+					String situationFamiliale = result.getString("situationFamiliale");
+					SituationFamiliale s1 = SituationFamiliale.célibataire;
+					switch (situationFamiliale) {
+					case "célibataire":
+						s1 = SituationFamiliale.célibataire;
+						break;
+					case "divorcé":
+						s1 = SituationFamiliale.divorcé;
+						break;
+					case "marié":
+						s1 = SituationFamiliale.marié;
+						break;
+					case "séparé":
+						s1 = SituationFamiliale.séparé;
+						break;
+					case "veuf":
+						s1 = SituationFamiliale.veuf;
+						break;
+					}
+					InputStream photo = result.getBinaryStream("photo");
+					
+					Etudiant e1 = new Etudiant(nom,prenom,username,email,null,dn,ln,e,adresse,s1,photo,f);
+					
+					
+					
+					
+					Absence a = new Absence(idAbsence,justifier,new Seance(idSeance,type,date,salle,avoirAbs,g,m),justification,e1);
+					s.add(a);
+				}
+				return s;
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+			return null;
+		}
 
 }
