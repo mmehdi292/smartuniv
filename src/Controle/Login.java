@@ -40,6 +40,11 @@ public class Login extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		String u = (String) session.getAttribute("user");
+		if(u != null) {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/authentification/accesDisponible.jsp");
+			rd.forward(request, response);
+		}
 		int error=0;
 		try {
 			 error=(int) session.getAttribute("error");
