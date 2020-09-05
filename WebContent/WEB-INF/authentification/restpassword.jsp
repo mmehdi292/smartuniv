@@ -36,7 +36,6 @@
 						<select id="language" class="form-control">
 							<option value="Française" selected>Française</option>
 							<option value="Anglaise">Anglaise</option>
-							<option value="Arabe">Arabe</option>
 						</select>
 					</div>
 				</form>

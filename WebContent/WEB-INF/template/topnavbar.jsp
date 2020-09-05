@@ -1,17 +1,43 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="topnav" id="myTopnav">
 			<div class="dropdown1">
 				<button class="dropbtn">
-					<p>Username</p>
-					<img src="1.png">
+					<p><c:out value="bienvune, ${sessionScope.user}"/></p>
+					<c:set var="profil" value="${sessionScope.profil}" scope="session" />
+					<img alt="profil img" src="getImage">
 				</button>
 				<div class="dropdown1-content">
-					<a href="#"><i class="fas fa-id-card-alt"></i><br>Consunlter
-						Profil</a> <a href="#"><i class="fas fa-user-edit"></i><br>Modifier
-						Profile</a> <a href="#"><i class="fas fa-sign-out-alt"></i><br>Deconnecter</a>
+					<c:choose>
+						<c:when test="${sessionScope.role.get(0) eq 'Etudiant'}">
+							<a href="ConsulterProfile?type=etudiant"><i class="fas fa-id-card-alt"></i><br>Profil(voir/modifier)</a>
+						</c:when>
+						<c:when test="${sessionScope.role.get(0) eq 'Enseignent'}">
+							<a href="ConsulterProfile?type=enseignent"><i class="fas fa-id-card-alt"></i><br>Profil(voir/modifier)</a>
+						</c:when>
+					</c:choose>
+					<a href="logout"><i class="fas fa-sign-out-alt"></i><br>Deconnecter</a>
 				</div>
 			</div>
-			<a href="#home" class="active">Espace administrateur</a> <a
-				href="#news">Espace enseignant</a> <a href="#contact">Espace
-				chef de departemet</a> <a href="#about">Espace Responsabele de
-				formtion</a> <a href="#about">Espace etudiant</a>
+			<c:forEach var="r" items="${sessionScope.role}">
+				<c:choose>
+					<c:when test="${ r eq 'Administrateur' }">
+						<a href="Goto?page=Administrateur" >Espace administrateur</a>
+					</c:when>
+					<c:when test="${ r eq 'Enseignent' }">
+						<a href="Goto?page=Enseignent">Espace enseignant</a>
+					</c:when>
+					<c:when test="${ r eq 'ResponsableDeFormation' }">
+						<a href="Goto?page=ResponsableDeFormation">Espace Responsabele deformtion</a>
+					</c:when>
+					<c:when test="${ r eq 'ChefDepartement' }">
+						<a href="Goto?page=ChefDepartement">Espace chef de departemet</a>
+					</c:when>
+					<c:when test="${ r eq 'Etudiant' }">
+						<a href="Goto?page=Etudiant">Espace etudiant</a>
+					</c:when>
+				</c:choose>
+				
+			
+			</c:forEach>
+			
 		</div>

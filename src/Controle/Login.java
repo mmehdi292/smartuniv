@@ -1,6 +1,7 @@
 package Controle;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import Modele.Administrateur;
 import Modele.ConnectionBD;
 import Modele.ResponsableDeFormation;
 import Modele.blocked;
@@ -52,22 +53,30 @@ public class Login extends HttpServlet {
 		bd.startConnection();
 		ArrayList<String> role = new ArrayList<String>() ;
 		if(error<2) {
+			
+			if(bd.isEnseignentByEmail(user, password)||bd.isEnseignentByUsername(user, password)) {
+				role.add("Enseignent");
+			}
 			if(bd.isAdministrateurByEmail(user, password)||bd.isAdministrateurByUsername(user, password)) {
 				role.add("Administrateur");
+				Administrateur a = bd.getAdministrateur(user);
+				InputStream profil = a.getPhoto();
+				System.out.println(profil.toString());
+				session.setAttribute("profil",profil);
 			}
 			if(bd.isChefDepartementByEmail(user, password)||bd.isChefDepartementByUsername(user, password)) {
 				role.add("ChefDepartement");
 			}
-			if(bd.isEnseignentByEmail(user, password)||bd.isEnseignentByUsername(user, password)) {
-				role.add("Enseignent");
-			}
+			
 			if(bd.isResponsableDeFormationByEmail(user, password)||bd.isResponsableDeFormationByUsername(user, password)) {
 				role.add("ResponsableDeFormation");
 				ResponsableDeFormation r = bd.getResponsableDeFormation(user);
 				String abr = r.getFormation().getAbrFormation();
+				InputStream photo = r.getPhoto();
 				System.out.println("----------------");
 				System.out.println(r.getUsername());
 				session.setAttribute("abrForamtion",abr);
+				session.setAttribute("photo",photo);
 			}
 			if(bd.isEtudiantByEmail(user, password)||bd.isEtudiantByUsername(user, password)) {
 				role.add("Etudiant");
