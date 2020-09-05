@@ -28,24 +28,34 @@ public class getETmpEnsServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//****************  dayOfWeek *******
-		//Calendar c = Calendar.getInstance();
-		//int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-		//////////////////////////////////////////////////////////////////
 		HttpSession session = request.getSession();
 		OperationEnseignent op=new OperationEnseignent();
 		String username=(String) session.getAttribute("user");
 		ArrayList<Seance> ars=new ArrayList<Seance>();
-		ars=op.getETmpEns(username);
+		try {
+			ars=op.getETmpEns(username);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("usernaem :"+username);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		
-
+		
+		System.out.println(ars.get(0).getType());
+		System.out.println(ars.get(0).getModule().getAbrModule());
+		System.out.println(ars.get(0).getSalle());
+		System.out.println(ars.get(0).getGroupe().getIdGroupe());
+		System.out.println(ars.get(0).getTemp());
+		
 		String tab[]=new String[25];
 		Calendar calendar = Calendar.getInstance();
 		System.out.println("                                        hada num de groupe machi id groupe tellement 3ndna constructeur wa7ed(int)                                 ");
 		for(Seance s:ars){	
 			calendar.setTime(s.getTemp());
+			System.out.println(calendar.get(Calendar.HOUR_OF_DAY));
+			System.out.println("G"+s.getGroupe().getIdGroupe()+" "+s.getType()+" "+s.getModule().getAbrModule()+" S"+s.getSalle());
+			System.out.println("hour "+calendar.get(Calendar.HOUR_OF_DAY));
 			switch (calendar.get(Calendar.DAY_OF_WEEK)){
 			case 1:
 				if(calendar.get(Calendar.HOUR_OF_DAY)==8&&calendar.get(Calendar.MINUTE)==30) {tab[0]="G"+s.getGroupe().getIdGroupe()+" "+s.getType()+" "+s.getModule().getAbrModule()+" S"+s.getSalle();break;}
@@ -81,6 +91,9 @@ public class getETmpEnsServlet extends HttpServlet {
 			}
 		} 
 		for(int m=0;m<25;m++){
+			System.out.println(tab[m]);
+		}
+		for(int m=0;m<25;m++){
 			if(tab[m]==null) tab[m]=" ";
 		}
 		
@@ -89,7 +102,7 @@ public class getETmpEnsServlet extends HttpServlet {
 		System.out.println("before dispatch");
 		RequestDispatcher dispatch=request.getRequestDispatcher("/WEB-INF/EscapeEnseignant/ConsulterETmpEns.jsp");
 		dispatch.forward(request, response);
-		
+
 	}
 
 
