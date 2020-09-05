@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import Modele.Absence;
 import Modele.OperationResponsableDeFormation;
 //http://localhost:8080/SMART_UNIV/api/Responable/AbsenceInfo/l3gl
+//http://localhost:8080/SMART_UNIV/api/Responable/AbsenceInfoEnseignant/epayley12
 @Path("/Responable")
 public class RestAPIResponsable {
 	
@@ -20,12 +21,16 @@ public class RestAPIResponsable {
 	  @Produces(MediaType.APPLICATION_JSON)
 	  public ArrayList<Absence>  getStatistiques(@PathParam("abrFormation") String abrFormation) {
 		  OperationResponsableDeFormation or = new OperationResponsableDeFormation();
-		  System.out.println(abrFormation);
-		  System.out.println("----");
 		  ArrayList<Absence> a = or.toutsLesAbsence(abrFormation);
-		  for(Absence as: a ) {
-			  System.out.println(as.getIdAbsence());
-		  }
+		  return a;
+	  }
+	  
+	  @GET
+	  @Path("/AbsenceInfoEnseignant/{username}")
+	  @Produces(MediaType.APPLICATION_JSON)
+	  public ArrayList<Absence>  getStatistiquesEnseignant(@PathParam("username") String username) {
+		  OperationResponsableDeFormation or = new OperationResponsableDeFormation();
+		  ArrayList<Absence> a = or.toutsLesAbsenceParEnsigenant(username);
 		  return a;
 	  }
 

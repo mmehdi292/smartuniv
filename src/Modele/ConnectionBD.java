@@ -2332,5 +2332,108 @@ public class ConnectionBD {
 			}
 			return null;
 		}
+		// les statistiques responsable de formation
+				public ArrayList<Absence> toutsLesAbsenceParEnsigenant(String user){
+					ArrayList<Absence> s = new ArrayList<Absence>();
+					try {
+						result = state.executeQuery("SELECT * FROM absence a, etudiant e, groupe g, seance s, module m, formation f,enseignentmodulesgroupe en,enseignent ens WHERE a.idseance = s.idseance AND a.username = e.username AND g.idgroupe = s.idgroupe AND s.abrModule = m.abrModule AND en.abrModule = m.abrModule AND en.username = ens.username AND m.abrFormation=f.abrFormation AND ens.username= '"+user+"';");
+						while (result.next()) {
+							int idAbsence = result.getInt("idAbsence");
+							Boolean justifier = result.getBoolean("justifier");
+							int idSeance = result.getInt("idSeance");
+							
+							String t = result.getString("type");
+							TypeSeance type = TypeSeance.COUR;
+							switch (t) {
+							case "TD":
+								type = TypeSeance.TD;
+								break;
+							case "TP":
+								type = TypeSeance.TP;
+								break;
+							}
+							Date date = result.getTimestamp("temp");
+							int salle = result.getInt("salle");
+							boolean avoirAbs = result.getBoolean("avoirAbs");
+							int idGroupe = result.getInt("idGroupe");
+							
+							
+							int numGroupe = result.getInt("numGroupe");
+							int section = result.getInt("section");
+							String abrFormation = result.getString("abrFormation");
+							
+							//String abrFormation = result.getString("abrFormation");
+							String nomFormation = result.getString("nomFormation");
+							String specialite = result.getString("specialite");
+							String c = result.getString("cycle");
+							Cycle cycle = Cycle.licence;
+							switch (c) {
+							case "master":
+								cycle = Cycle.master;
+								break;
+							}
+							int annee = result.getInt("annee");
+							String Departement = result.getString("Departement");
+							Formation f = new Formation(nomFormation,abrFormation,specialite,cycle,annee,Departement);
+							Groupe g = new Groupe(idGroupe,numGroupe,section,f);
+							String nomModule = result.getString("nomModule");
+							String abrModule = result.getString("abrModule");
+							int semester = result.getInt("semester");
+							Module m = new Module(nomModule,abrModule,semester,f);
+							
+							
+							
+							
+							
+							InputStream justification = result.getBinaryStream("justification");
+							String username = result.getString("username");
+							
+							String nom = result.getString("nom");
+							String prenom = result.getString("prenom");
+							String email = result.getString("email");
+							
+							Date dn = result.getDate("dn");
+							String ln = result.getString("ln");
+							String sexe = result.getString("sexe");
+							Sexe e = Sexe.Femme;
+							if (sexe.equalsIgnoreCase("Homme")) {
+								e = Sexe.Homme;
+							}
+							String adresse = result.getString("adresse");
+							String situationFamiliale = result.getString("situationFamiliale");
+							SituationFamiliale s1 = SituationFamiliale.célibataire;
+							switch (situationFamiliale) {
+							case "célibataire":
+								s1 = SituationFamiliale.célibataire;
+								break;
+							case "divorcé":
+								s1 = SituationFamiliale.divorcé;
+								break;
+							case "marié":
+								s1 = SituationFamiliale.marié;
+								break;
+							case "séparé":
+								s1 = SituationFamiliale.séparé;
+								break;
+							case "veuf":
+								s1 = SituationFamiliale.veuf;
+								break;
+							}
+							InputStream photo = result.getBinaryStream("photo");
+							
+							Etudiant e1 = new Etudiant(nom,prenom,username,email,null,dn,ln,e,adresse,s1,photo,f);
+							
+							
+							
+							
+							Absence a = new Absence(idAbsence,justifier,new Seance(idSeance,type,date,salle,avoirAbs,g,m),justification,e1);
+							s.add(a);
+						}
+						return s;
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+					return null;
+				}
 
 }
