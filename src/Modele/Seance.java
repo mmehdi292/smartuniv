@@ -36,7 +36,13 @@ public class Seance {
 		this.groupe = groupe;
 		this.module = module;
 	}
-	
+	public Seance(TypeSeance ty, Date temp, int salle, Module module, Groupe groupe) {
+		this.type = ty;
+		this.temp = temp;
+		this.salle = salle;
+		this.module = module;
+		this.groupe=groupe;
+	}
 	public Seance(TypeSeance type, Date temp, int salle, Module module) {
 		super();
 		this.type = type;
