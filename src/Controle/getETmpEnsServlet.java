@@ -1,6 +1,7 @@
 package Controle;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,25 +33,16 @@ public class getETmpEnsServlet extends HttpServlet {
 		OperationEnseignent op=new OperationEnseignent();
 		String username=(String) session.getAttribute("user");
 		ArrayList<Seance> ars=new ArrayList<Seance>();
-		try {
-			ars=op.getETmpEns(username);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ars=op.getETmpEns(username);
 		System.out.println("usernaem :"+username);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		
 		
-		System.out.println(ars.get(0).getType());
-		System.out.println(ars.get(0).getModule().getAbrModule());
-		System.out.println(ars.get(0).getSalle());
-		System.out.println(ars.get(0).getGroupe().getIdGroupe());
-		System.out.println(ars.get(0).getTemp());
+		
 		
 		String tab[]=new String[25];
 		Calendar calendar = Calendar.getInstance();
-		System.out.println("                                        hada num de groupe machi id groupe tellement 3ndna constructeur wa7ed(int)                                 ");
+		
 		for(Seance s:ars){	
 			calendar.setTime(s.getTemp());
 			System.out.println(calendar.get(Calendar.HOUR_OF_DAY));
