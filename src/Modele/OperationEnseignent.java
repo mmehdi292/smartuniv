@@ -90,4 +90,13 @@ public class OperationEnseignent {
 		bd.endConnection();
 		return b;
 	}
+	// getEmploi de temps
+	public ArrayList<Seance> getETmpEns(String username){
+		ConnectionBD bd=new ConnectionBD();
+		bd.startConnection();
+		ArrayList<Seance> ars=new ArrayList<Seance>();
+		ars=bd.getETmpEns(username);
+		bd.endConnectionWithOutResult();
+		return ars;
+	}
 }
