@@ -2075,10 +2075,16 @@ public class ConnectionBD {
 			TypeSeance ty = null;
 
 		try {
-			result=state.executeQuery("select type,temp,salle,module.abrmodule,numgroupe from seance,groupe,module,enseignent,enseignentmodulesgroupe where enseignent.username=enseignentmodulesgroupe.username and module.abrmodule=enseignentmodulesgroupe.abrmodule and groupe.idgroupe=enseignentmodulesgroupe.idgroupe and seance.idgroupe=groupe.idgroupe and module.abrmodule=seance.abrmodule and enseignent.username=\""+username+"\" and temp between \'"+startDate+" 08:30:00\' and \'"+endDate+" 14:30:00\';");
+			result=state.executeQuery("select enseignentmodulesgroupe.type,temp,salle,module.abrmodule,numgroupe from seance,groupe,module,enseignent,enseignentmodulesgroupe where enseignent.username=enseignentmodulesgroupe.username and module.abrmodule=enseignentmodulesgroupe.abrmodule and groupe.idgroupe=enseignentmodulesgroupe.idgroupe and seance.idgroupe=groupe.idgroupe and module.abrmodule=seance.abrmodule and enseignent.username=\""+username+"\" and temp between \'"+startDate+" 08:30:00\' and \'"+endDate+" 14:30:00\';");
 			while(result.next()==true) {
 				String t=result.getString(1);
-				Date temp=result.getDate(2);
+				String temp=result.getString(2);
+				try {
+					d=sdf.parse(temp);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				int salle=result.getInt(3);
 				String abrModule=result.getString(4);
 				int numGroupe=result.getInt(5);
@@ -2093,7 +2099,7 @@ public class ConnectionBD {
 					break;
 				}
 				System.out.println("numGroupe");
-				Seance s = new Seance(ty,temp,salle,new Module(abrModule));
+				Seance s = new Seance(ty,d,salle,new Module(abrModule),new Groupe(numGroupe));
 				ars.add(s);
 			}
 		} catch (SQLException e) {
