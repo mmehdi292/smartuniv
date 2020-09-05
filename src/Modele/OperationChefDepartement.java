@@ -96,4 +96,12 @@ public class OperationChefDepartement {
 			bd.endConnectionWithOutResult();
 			return b;
 		}
+		// les statiques chef
+		public ArrayList<Absence> toutsLesAbsenceParChef(String Departement){
+			ConnectionBD bd = new ConnectionBD();
+			bd.startConnection();
+			ArrayList<Absence> b = bd.toutsLesAbsenceChef(Departement);
+			bd.endConnection();
+			return b;
+		}
 }

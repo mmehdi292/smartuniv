@@ -8,7 +8,7 @@
 		<a href="AffecterLesEtudiants"><i class="fas fa-arrow-alt-circle-right"></i><span>Affecter les etudiants</span></a>
 		<a href="#"><i class="fas fa-folder-open"></i><span>Gerer les justification</span></a>
 		<a href="#"><i class="fas fa-save"></i><span>Enregistrer la justification</span></a>
-		<a href="#"><i class="fas fa-file-image"></i><span>Consulter la justification</span></a>
+		<a href="StatChef"><i class="fas fa-chart-bar"></i><span>Statistique</span></a>
 		<a href="#"><i class="fas fa-file-export"></i><span>Etablir la liste des excles</span></a>
 		<a href="GestionHistorique"><i class="fas fa-history"></i><span>Historique</span></a>
 </div>

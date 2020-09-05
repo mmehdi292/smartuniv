@@ -18,5 +18,6 @@ public class OperationResponsableDeFormation {
 		bd.endConnection();
 		return b;
 	}
+	
 
 }

@@ -82,4 +82,12 @@ public class OperationEnseignent {
 		bd.endConnectionWithOutResult();
 		return b;
 	}
+	//LES STATISTIQUES
+	public ArrayList<Absence> toutsLesAbsenceParEnsigenant(String user){
+		ConnectionBD bd = new ConnectionBD();
+		bd.startConnection();
+		ArrayList<Absence> b = bd.toutsLesAbsenceParEnsigenant(user);
+		bd.endConnection();
+		return b;
+	}
 }
