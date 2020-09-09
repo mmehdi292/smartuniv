@@ -62,7 +62,7 @@
 										<select name="${et.getIdGroupe()}-${type}">
 											<option value="">Aucun</option>
 											<c:forEach var="enseignent" items="${sessionScope.enseignents}">
-												<% Boolean b = false; %>
+												<% boolean b = false; %>
 												<c:forEach var="deja" items="${sessionScope.dejaAffecter}">
 													<c:if test="${et.getIdGroupe() eq deja.getGroupe().getIdGroupe() and enseignent.getUsername() eq deja.getEnsiegnent().getUsername() and type eq deja.getType()}">
 														<option value="${enseignent.getUsername()}" selected>${enseignent.getNom()} ${enseignent.getPrenom()}</option>

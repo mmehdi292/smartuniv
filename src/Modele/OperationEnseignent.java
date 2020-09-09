@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class OperationEnseignent {
-	// les groupes d'un ensiengnent
+	// les groupes d'un enseignant
 	public ArrayList<EnseiModuleGroupe> enseiModuleGroupe(String username) {
 		ConnectionBD bd = new ConnectionBD();
 		bd.startConnection();
@@ -12,8 +12,27 @@ public class OperationEnseignent {
 		bd.endConnection();
 		return m;
 	}
+	
+	public ArrayList<Absence> getInfoAbsencesPourListeExclusPourTroisAbsencesEns(String username){
+		ArrayList<Absence> ae=new ArrayList<Absence>();
+		ConnectionBD bd=new ConnectionBD();
+		bd.startConnection();
+		ae=bd.getInfoAbsencesPourListeExclusPourTroisAbsencesEns(username);
+		bd.endConnection();
+		System.out.println("connection start ok");
+		return ae;
+	}
+	public ArrayList<Absence> getInfoAbsencesPourListeExclusTousEns(String username){
+		ArrayList<Absence> ae=new ArrayList<Absence>();
+		ConnectionBD bd=new ConnectionBD();
+		bd.startConnection();
+		ae=bd.getInfoAbsencesPourListeExclusTousEns(username);
+		bd.endConnection();
+		System.out.println("connection start ok");
+		return ae;
+	}
 
-	// les groupes d'un ensiengnent
+	// les groupes d'un enseingnant
 	public ArrayList<Seance> getSeances(int groupe, String module, String type) {
 		ConnectionBD bd = new ConnectionBD();
 		bd.startConnection();
@@ -99,4 +118,6 @@ public class OperationEnseignent {
 		bd.endConnectionWithOutResult();
 		return ars;
 	}
+	
+	
 }

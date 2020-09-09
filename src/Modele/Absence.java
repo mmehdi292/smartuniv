@@ -18,6 +18,12 @@ public class Absence {
 		this.justification = justification;
 		this.etudiants = etudiants;
 	}
+	public Absence(Seance seance, Etudiant etudiant) {
+		this.seance=seance;this.etudiants=etudiant;
+	}
+	public Absence(int idAbsence, Seance seance, Etudiant etudiant) {
+		this.idAbsence=idAbsence;this.seance=seance;this.etudiants=etudiant;
+	}
 	public int getIdAbsence() {
 		return idAbsence;
 	}

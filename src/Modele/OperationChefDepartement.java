@@ -1,5 +1,7 @@
 package Modele;
 
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class OperationChefDepartement {
@@ -104,4 +106,36 @@ public class OperationChefDepartement {
 			bd.endConnection();
 			return b;
 		}
+		
+		public String getNomDepartement(String usernameChef)  {
+			ConnectionBD bd=new ConnectionBD();
+			bd.startConnection();
+			String ae = null;
+			ae = bd.getNomDepartement(usernameChef);
+			bd.endConnection();
+			System.out.println("connection start ok");
+			return ae;
+		}
+		
+		public ArrayList<Absence> getInfoAbsencesPourListeExclusPourTroisAbsences(String departement){
+			ArrayList<Absence> ae=new ArrayList<Absence>();
+			ConnectionBD bd=new ConnectionBD();
+			bd.startConnection();
+			ae=bd.getInfoAbsencesPourListeExclusPourTroisAbsences(departement);
+			bd.endConnection();
+			System.out.println("connection start ok");
+			return ae;
+		}
+		public ArrayList<Absence> getInfoAbsencesPourListeExclusTous(String departement){
+			ArrayList<Absence> ae=new ArrayList<Absence>();
+			ConnectionBD bd=new ConnectionBD();
+			bd.startConnection();
+			ae=bd.getInfoAbsencesPourListeExclusTous(departement);
+			bd.endConnection();
+			System.out.println("connection start ok");
+			return ae;
+		}
+		
+		
+		
 }

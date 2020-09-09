@@ -11,7 +11,6 @@ public class Seance {
 	private boolean avoirAbs;
 	private Groupe groupe;
 	private Module module;
-	private ArrayList<Absence> absences;
 	
 	public Seance(int idSeance) {
 		super();
@@ -49,6 +48,17 @@ public class Seance {
 		this.temp = temp;
 		this.salle = salle;
 		this.module = module;
+	}
+	public Seance(TypeSeance type, Groupe groupe, Module module) {
+		this.type=type;this.groupe=groupe;this.module=module;
+	}
+	public Seance(int idSeance, TypeSeance ty, Date d, boolean ab, Groupe groupe, Module module) {
+		this.idSeance=idSeance;
+		this.type=ty;
+		this.temp=d;
+		this.avoirAbs=ab;
+		this.groupe=groupe;
+		this.module=module;
 	}
 	public int getIdSeance() {
 		return idSeance;
@@ -91,12 +101,6 @@ public class Seance {
 	}
 	public void setModule(Module module) {
 		this.module = module;
-	}
-	public ArrayList<Absence> getAbsences() {
-		return absences;
-	}
-	public void setAbsences(ArrayList<Absence> absences) {
-		this.absences = absences;
 	}
 	
 	

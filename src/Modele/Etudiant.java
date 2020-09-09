@@ -24,6 +24,13 @@ public class Etudiant extends Utilisateur {
 
 
 
+	public Etudiant(String user, String nom, String prenom, Formation formation) {
+		super(nom,prenom,user);
+		this.formation=formation;
+	}
+
+
+
 	private Formation formation;
 	private ArrayList<Module> modules; //Dans le cas o� l'�tudiant a des modules pour le retudier (progression)
 	private ArrayList<Groupe> groupes;//Dans le cas de plusieurs groupe(groupe simple , groupe progression , groupe atlier)

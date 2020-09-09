@@ -80,6 +80,8 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select username,motDePass from Etudiant where username = '" + user
 					+ "' and motDePass = MD5('" + pass + "');");
+					//+ "' and motDePass = '" + pass + "';");
+
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -91,6 +93,8 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select username,motDePass from Responsable where username = '" + user
 					+ "' and motDePass = MD5('" + pass + "');");
+					//+ "' and motDePass = '" + pass + "';");
+
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -102,6 +106,8 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select username,motDePass from Enseignent where username = '" + user
 					+ "' and motDePass = MD5('" + pass + "');");
+					//+ "' and motDePass = '" + pass + "';");
+
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -113,6 +119,8 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select username,motDePass from Chef where username = '" + user
 					+ "' and motDePass = MD5('" + pass + "');");
+					//+ "' and motDePass = '" + pass + "';");
+
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -124,6 +132,8 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select username,motDePass from Administrateur where username = '" + user
 					+ "' and motDePass = MD5('" + pass + "');");
+					//+ "' and motDePass = '" + pass + "';");
+
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -135,6 +145,8 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select email,motDePass from Etudiant where email = '" + email
 					+ "' and motDePass = MD5('" + pass + "');");
+					//+ "' and motDePass = '" + pass + "';");
+
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -146,6 +158,8 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select email,motDePass from Responsable where email = '" + email
 					+ "' and motDePass = MD5('" + pass + "');");
+					//+ "' and motDePass = '" + pass + "';");
+
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -157,6 +171,8 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select email,motDePass from Enseignent where email = '" + email
 					+ "' and motDePass = MD5('" + pass + "');");
+					//+ "' and motDePass = '" + pass + "';");
+
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -168,6 +184,8 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select email,motDePass from Chef where email = '" + email
 					+ "' and motDePass = MD5('" + pass + "');");
+					//+ "' and motDePass = '" + pass + "';");
+
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -179,6 +197,8 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select email,motDePass from Administrateur where email = '" + email
 					+ "' and motDePass = MD5('" + pass + "');");
+					//+ "' and motDePass = '" + pass + "';");
+
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -2544,5 +2564,223 @@ public class ConnectionBD {
 					}
 					return null;
 				}
+				
+				public String getNomDepartement(String usernameChef) {
+					String nomDepartement=null;
+					try {
+						result=state.executeQuery("select nomDepartement from chef where username=\""+usernameChef+"\"");
+					
+					while(result.next()) {
+						nomDepartement=result.getString(1);
+						System.out.println("nomDepartement BD :: "+nomDepartement);
+					}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return nomDepartement;
+				}
+				
+				public ArrayList<Absence> getInfoAbsencesPourListeExclusPourTroisAbsences(String departement){
+					ArrayList<Absence> ae=new ArrayList<Absence>();
+					SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+					Date d=null;
+					try {
+					result=state.executeQuery("select idAbsence,etudiant.username,nom,prenom,seance.idseance,type,temp,avoirabs,abrmodule,formation.abrformation,numGroupe from etudiant,formation,absence,seance,groupe where groupe.idGroupe=seance.idGroupe and etudiant.abrformation=formation.abrformation and etudiant.username=absence.username and seance.idseance=absence.idseance and departement=\""+departement+"\" and justifier=0 group by idAbsence;");
+					if(!result.next()) { System.out.println("Aucun absence non justifiée");return ae;}
+					else {boolean b=true;
+						do {
+							int idAbsence=result.getInt(1);
+							String username=result.getString(2);
+							String nom=result.getString(3);
+							String prenom=result.getString(4);
+							int idSeance=result.getInt(5);
+							String type=result.getString(6);
+							TypeSeance ty = TypeSeance.COUR;
+							switch (type) {
+							case "TD":
+								ty = TypeSeance.TD;
+								break;
+							case "TP":
+								ty = TypeSeance.TP;
+								break;
+							}
+							String temp=result.getString(7);
+							
+							d=sdf.parse(temp);							
+							int avoirAbs=result.getInt(8);
+							boolean ab=false;
+							if(avoirAbs==1) ab=true;
+							String abrModule=result.getString(9);
+							String abrFormation=result.getString(10);
+							int numGroupe=result.getInt(11);
+							b=result.next();
+							ae.add(new Absence(idAbsence,new Seance(idSeance,ty,d,ab,new Groupe(numGroupe),new Module(abrModule)),new Etudiant(username,nom,prenom,new Formation(abrFormation))));
+						}while(b);		
+					}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					
+					return ae;
+				}
+				
+				public ArrayList<Absence> getInfoAbsencesPourListeExclusTous(String departement){
+					ArrayList<Absence> ae=new ArrayList<Absence>();
+					SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+					Date d=null;
+					try {
+						result=state.executeQuery("select idAbsence,etudiant.username,nom,prenom,seance.idseance,type,temp,avoirabs,abrmodule,formation.abrformation,numGroupe from etudiant,formation,absence,seance,groupe where groupe.idGroupe=seance.idGroupe and etudiant.abrformation=formation.abrformation and etudiant.username=absence.username and seance.idseance=absence.idseance and departement=\""+departement+"\" group by idAbsence;");					
+					if(!result.next()) { System.out.println("Aucun absence non justifiée");return ae;}
+					else {boolean b=true;
+						do {
+							int idAbsence=result.getInt(1);
+							String username=result.getString(2);
+							String nom=result.getString(3);
+							String prenom=result.getString(4);
+							int idSeance=result.getInt(5);
+							String type=result.getString(6);
+							TypeSeance ty = TypeSeance.COUR;
+							switch (type) {
+							case "TD":
+								ty = TypeSeance.TD;
+								break;
+							case "TP":
+								ty = TypeSeance.TP;
+								break;
+							}
+							String temp=result.getString(7);
+							
+							d=sdf.parse(temp);
+							int avoirAbs=result.getInt(8);
+							boolean ab=false;
+							if(avoirAbs==1) ab=true;
+							String abrModule=result.getString(9);
+							System.out.println(abrModule+" :!!");
+							String abrFormation=result.getString(10);
+							int numGroupe=result.getInt(11);
+							
+							Groupe g=new Groupe(numGroupe);
+							Module m=new Module(abrModule);
+							Formation f=new Formation(abrFormation);
+							Etudiant e=new Etudiant(username,nom,prenom,f);
+							Seance s=new Seance(idSeance,ty,d,ab,g,m);
+							Absence a=new Absence(idAbsence,s,e);
+							b=result.next();
+							ae.add(a);
+						}while(b);		
+					}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					return ae;
+				}
+				
+				public ArrayList<Absence> getInfoAbsencesPourListeExclusPourTroisAbsencesEns(String user){
+					ArrayList<Absence> ae=new ArrayList<Absence>();
+					SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+					Date d=null;
+					System.out.println("user first "+user);
+					try {
+						result=state.executeQuery("select idAbsence,etudiant.username,etudiant.nom,etudiant.prenom,seance.idseance,seance.type,temp,avoirabs,seance.abrmodule,formation.abrformation,numGroupe from enseignent,etudiant,formation,absence,seance,groupe,enseignentmodulesgroupe where enseignent.username=enseignentmodulesgroupe.username and groupe.idGroupe=enseignentmodulesgroupe.idgroupe and groupe.idGroupe=seance.idGroupe and etudiant.abrformation=formation.abrformation and etudiant.username=absence.username and seance.idseance=absence.idseance and enseignent.username=\""+user+"\" and justifier=0 group by idAbsence;");					
+					if(!result.next()) { System.out.println("Aucun absence non justifiée tr");return ae;}
+					else {boolean b=true;
+						do {
+							int idAbsence=result.getInt(1);
+							String username=result.getString(2);
+							String nom=result.getString(3);
+							String prenom=result.getString(4);
+							int idSeance=result.getInt(5);
+							String type=result.getString(6);
+							TypeSeance ty = TypeSeance.COUR;
+							switch (type) {
+							case "TD":
+								ty = TypeSeance.TD;
+								break;
+							case "TP":
+								ty = TypeSeance.TP;
+								break;
+							}
+							String temp=result.getString(7);
+							
+							d=sdf.parse(temp);							
+							int avoirAbs=result.getInt(8);
+							boolean ab=false;
+							if(avoirAbs==1) ab=true;
+							String abrModule=result.getString(9);
+							String abrFormation=result.getString(10);
+							int numGroupe=result.getInt(11);
+							b=result.next();
+							ae.add(new Absence(idAbsence,new Seance(idSeance,ty,d,ab,new Groupe(numGroupe),new Module(abrModule)),new Etudiant(username,nom,prenom,new Formation(abrFormation))));
+						}while(b);		
+					}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					
+					return ae;
+				}
+				
+				public ArrayList<Absence> getInfoAbsencesPourListeExclusTousEns(String user){
+					ArrayList<Absence> ae=new ArrayList<Absence>();
+					SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+					Date d=null;
+					System.out.println("user second "+user);
+
+					try {
+						result=state.executeQuery("select idAbsence,etudiant.username,etudiant.nom,etudiant.prenom,seance.idseance,seance.type,temp,avoirabs,seance.abrmodule,formation.abrformation,numGroupe from enseignent,etudiant,formation,absence,seance,groupe,enseignentmodulesgroupe where enseignent.username=enseignentmodulesgroupe.username and groupe.idGroupe=enseignentmodulesgroupe.idgroupe and groupe.idGroupe=seance.idGroupe and etudiant.abrformation=formation.abrformation and etudiant.username=absence.username and seance.idseance=absence.idseance and enseignent.username=\""+user+"\" group by idAbsence;");					
+					if(!result.next()) { System.out.println("Aucun absence non justifiée ts");return ae;}
+					else {boolean b=true;
+						do {
+							int idAbsence=result.getInt(1);
+							String username=result.getString(2);
+							String nom=result.getString(3);
+							String prenom=result.getString(4);
+							int idSeance=result.getInt(5);
+							String type=result.getString(6);
+							TypeSeance ty = TypeSeance.COUR;
+							switch (type) {
+							case "TD":
+								ty = TypeSeance.TD;
+								break;
+							case "TP":
+								ty = TypeSeance.TP;
+								break;
+							}
+							String temp=result.getString(7);
+							
+							d=sdf.parse(temp);
+							int avoirAbs=result.getInt(8);
+							boolean ab=false;
+							if(avoirAbs==1) ab=true;
+							String abrModule=result.getString(9);
+							System.out.println(abrModule+" :!!");
+							String abrFormation=result.getString(10);
+							int numGroupe=result.getInt(11);
+							
+							Groupe g=new Groupe(numGroupe);
+							Module m=new Module(abrModule);
+							Formation f=new Formation(abrFormation);
+							Etudiant e=new Etudiant(username,nom,prenom,f);
+							Seance s=new Seance(idSeance,ty,d,ab,g,m);
+							Absence a=new Absence(idAbsence,s,e);
+							b=result.next();
+							ae.add(a);
+						}while(b);		
+					}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					return ae;
+				}
+				
 
 }

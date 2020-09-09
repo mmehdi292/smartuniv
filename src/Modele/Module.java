@@ -8,7 +8,6 @@ public class Module {
 	private int semester;
 	private Formation formation;
 	private ArrayList<Enseignent> enseignents;
-	private ArrayList<Seance> seances;
 	
 	public Module(String nomModule, String abrModule, int semester, Formation formation) {
 		super();
@@ -21,6 +20,11 @@ public class Module {
 	public Module(String abrModule) {
 		super();
 		this.abrModule = abrModule;
+	}
+
+	public Module(String abrModule, int semester) {
+		this.abrModule=abrModule;
+		this.semester=semester;
 	}
 
 	public String getNomModule() {
@@ -52,12 +56,6 @@ public class Module {
 	}
 	public void setEnseignents(ArrayList<Enseignent> enseignents) {
 		this.enseignents = enseignents;
-	}
-	public ArrayList<Seance> getSeances() {
-		return seances;
-	}
-	public void setSeances(ArrayList<Seance> seances) {
-		this.seances = seances;
 	}
 	
 
