@@ -2881,7 +2881,6 @@ public class ConnectionBD {
 							Etudiant e1 = new Etudiant(username,nom,prenom,f);
 							
 							Absence a = new Absence(idAbsence,justification,new Seance(idSeance,type,date,avoirAbs,g,m),e1);
-							if(justification!=null)
 							s.add(a);
 						}
 						return s;
