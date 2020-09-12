@@ -21,12 +21,29 @@ public class Groupe {
 		this.section = section;
 		this.formation = formation;
 	}
+	public Groupe(int numGroupe, Formation formation) {
+		super();
+		this.numGroupe = numGroupe;
+		this.formation = formation;
+	}
 	
 	public Groupe(int numGroupe, int section, Formation formation) {
 		super();
 		this.numGroupe = numGroupe;
 		this.section = section;
 		this.formation = formation;
+	}
+	public Groupe(int idGroupe, Formation formation, int numGroupe) {
+		super();
+		this.numGroupe = numGroupe;
+		this.idGroupe = idGroupe;
+		this.formation = formation;
+	}
+	public Groupe(int idGroupe, int numGroupe) {
+		super();
+		this.numGroupe = numGroupe;
+		this.idGroupe = idGroupe;
+		
 	}
 
 	public int getIdGroupe() {

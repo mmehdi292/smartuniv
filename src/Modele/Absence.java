@@ -24,6 +24,13 @@ public class Absence {
 	public Absence(int idAbsence, Seance seance, Etudiant etudiant) {
 		this.idAbsence=idAbsence;this.seance=seance;this.etudiants=etudiant;
 	}
+	public Absence(int idAbsence, InputStream justification, Seance seance, Etudiant e1) {
+		this.idAbsence = idAbsence;
+		this.seance = seance;
+		this.justification = justification;
+		this.etudiants = e1;
+		
+	}
 	public int getIdAbsence() {
 		return idAbsence;
 	}

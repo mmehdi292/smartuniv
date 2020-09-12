@@ -2,7 +2,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/template/header.jsp" />
-<title>Gestion Modules</title>
+<title>Gestion des Modules</title>
 </head>
 
 <body>
@@ -19,7 +19,7 @@
 			<h2>Gestion des Modules</h2>
 			<button
 				onclick="document.getElementById('id01').style.display='block'">
-				<i class="fas fa-user-plus"></i>Ajouter Modules
+				<i class="fas fa-user-plus"></i>Ajouter un Module
 			</button>
 		</div>
 		<!--title page with add button end-->
@@ -29,14 +29,14 @@
 			<form class="modal-content animate" action="AjouterModule"
 				method="post">
 				<div class="container1">
-					<h2>Ajouter Modules</h2>
+					<h2>Ajouter un Module</h2>
 					<label><b>Nom de Module</b></label> <input type="text"
-						placeholder="Entrer nom de modules" name="nom" required>
-					<label><b>Abrivation module</b></label>
-					<input type="text" placeholder="Entrer le abrModule" name="abrModule" required>
+						placeholder="Entrer le nom de module" name="nom" required>
+					<label><b>Abréviation de module</b></label>
+					<input type="text" placeholder="Entrer l'abréviation de module" name="abrModule" required>
 
-					<label><b>Semester</b></label>
-					<input type="number" placeholder="Entrer le Semester" name="semester" min="1" max="6" required>
+					<label><b>Semestre</b></label>
+					<input type="number" placeholder="Entrer le Semestre" name="semester" min="1" max="6" required>
 					<label for="formation">Formation</label>
 					<select id="formation" name="formation">
 						<c:forEach var="f" items="${sessionScope.Formations}">
@@ -58,32 +58,32 @@
 		<div class="tableDiv">
 			<!--filterage option start-->
 			<div class="text">
-				<h3>les opetions de filtrage</h3>
+				<h3>Filtrer</h3>
 				<input type="text" id="myInput" onkeyup="search()"
 					placeholder="Recherche...">
 				<div style="clear: both"></div>
 				<div class="opt">
-					<label>sexe <select onselect="">
-							<option value="">Aucan</option>
+					<label>Sexe <select onselect="">
+							<option value="">Aucun</option>
 							<option value="Homme">Homme</option>
 							<option value="Femme">Femme</option>
 					</select>
-					</label> <label>situation Familiale <select onselect="">
-							<option value="">Aucan</option>
+					</label> <label>Situation Familiale <select onselect="">
+							<option value="">Aucun</option>
 							<option value="marié">marié</option>
 							<option value="divorcé">divorcé</option>
 							<option value="séparé">séparé</option>
 							<option value="célibataire">célibataire</option>
 							<option value="veuf">veuf</option>
 					</select>
-					</label> <label>Departement <select onselect="">
-							<option value="">Aucan</option>
+					</label> <label>Département <select onselect="">
+							<option value="">Aucun</option>
 							<option value="TLSI">TLSI</option>
 							<option value="IFA">IFA</option>
 							<option value="MI">MI</option>
 					</select>
 					</label> <label>Formation <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="GL">GL</option>
 							<option value="MI">MI</option>
 							<option value="SCI">SCI</option>
@@ -91,7 +91,7 @@
 							<option value="TI">TI</option>
 					</select>
 					</label> <label>Module <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="GL">GL</option>
 							<option value="MI">DAAW</option>
 							<option value="SCI">TL</option>
@@ -106,17 +106,17 @@
 			<div class="table-responsive">
 				<c:choose>
 					<c:when test="${ empty sessionScope.Modules}">
-						<h1 style="text-align: center">la liste vide</h1>
+						<h1 style="text-align: center">La liste vide</h1>
 					</c:when>
 					<c:otherwise>
 
 						<table class="table table-hover">
 							<tr>
-								<th>Nom</th>
-								<th>abrivation</th>
-								<th>Semester</th>
+								<th>Nom de module</th>
+								<th>Abréviation de module</th>
+								<th>Semestre</th>
 								<th>Formation</th>
-								<th>operation</th>
+								<th>Opération</th>
 							</tr>
 
 							<c:forEach var="et" items="${sessionScope.Modules}">
@@ -153,7 +153,7 @@
 		</div>
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

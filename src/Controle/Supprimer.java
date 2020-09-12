@@ -41,11 +41,11 @@ public class Supprimer extends HttpServlet {
 		switch (type) {
 			case "module":
 				if(oa.suppModule(abr)) {
-					session.setAttribute("message","supprition avec succes");
+					session.setAttribute("message","suppression avec succès");
 					session.setAttribute("etat","Succès");
 				}
 				else {
-					session.setAttribute("message","supprition echoue");
+					session.setAttribute("message","suppression échoué");
 					session.setAttribute("etat","échoué");
 				}
 				rd = request.getRequestDispatcher("GestionModule");
@@ -53,11 +53,11 @@ public class Supprimer extends HttpServlet {
 			break;
 			case "formation":
 				if(oa.suppFormation(abr)) {
-					session.setAttribute("message","supprition avec succes");
+					session.setAttribute("message","suppression avec succès");
 					session.setAttribute("etat","Succès");
 				}
 				else {
-					session.setAttribute("message","supprition echoue, il y a des etudiats etude cette formation");
+					session.setAttribute("message","suppression échoué, il y a des étudiants qui étudient cette formation");
 					session.setAttribute("etat","échoué");
 				}
 				rd = request.getRequestDispatcher("GestionFormation");
@@ -66,11 +66,11 @@ public class Supprimer extends HttpServlet {
 			case "vacance":
 				int id = Integer.parseInt(abr);
 				if(oa.suppVacance(id)) {
-					session.setAttribute("message","supprition avec succes");
+					session.setAttribute("message","suppression avec succès");
 					session.setAttribute("etat","Succès");
 				}
 				else {
-					session.setAttribute("message","supprition echoue, il y a des etudiats etude cette formation");
+					session.setAttribute("message","suppression échoué, il y a des étudiants qui étudient dans cette formation");
 					session.setAttribute("etat","échoué");
 				}
 				rd = request.getRequestDispatcher("GestionVacance");
@@ -79,11 +79,11 @@ public class Supprimer extends HttpServlet {
 			case "seance":
 				int idSeance = Integer.parseInt(abr);
 				if(oa.suppSeance(idSeance)) {
-					session.setAttribute("message","supprition avec succes");
+					session.setAttribute("message","suppression avec succès");
 					session.setAttribute("etat","Succès");
 				}
 				else {
-					session.setAttribute("message","supprition echoue, il y a des etudiats etude cette module");
+					session.setAttribute("message","suppression échoué, il y a des étudiants qui étudient ce module");
 					session.setAttribute("etat","échoué");
 				}
 				rd = request.getRequestDispatcher("GestionSeance");
@@ -92,11 +92,11 @@ public class Supprimer extends HttpServlet {
 			case "groupe":
 				int idGroupe = Integer.parseInt(abr);
 				if(oa.suppGroupe(idGroupe)) {
-					session.setAttribute("message","supprition avec succes");
+					session.setAttribute("message","suppression avec succès");
 					session.setAttribute("etat","Succès");
 				}
 				else {
-					session.setAttribute("message","supprition echoue, il y a des etudiats etude ce groupe");
+					session.setAttribute("message","suppression échoué, il y a des étudiants qui étudient dans ce groupe");
 					session.setAttribute("etat","échoué");
 				}
 				rd = request.getRequestDispatcher("GestionGroupe");

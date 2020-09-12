@@ -14,9 +14,9 @@
 
 		<!--title page with add button start-->
 		<div class="titlePage">
-			<h2>Modifier Vacance</h2>
+			<h2>Modification d'une Vacance</h2>
 			<a href="GestionVacance"> <i class="fas fa-users"></i>
-				consulter les Vacances
+				Consulter les Vacances
 			</a>
 		</div>
 		<div class="tableDiv">
@@ -45,7 +45,7 @@
 		</div>
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

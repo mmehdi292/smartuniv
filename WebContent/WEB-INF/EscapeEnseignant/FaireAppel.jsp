@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="/WEB-INF/template/header.jsp" />
-<title>Espace Enseignent </title>
+<title>Espace Enseignant </title>
 </head>
 
 <body>
@@ -35,13 +35,13 @@
 			<div class="table-responsive">
 				<c:choose>
 					<c:when test="${ empty sessionScope.Seances}">
-						<h1 style="text-align: center">la liste vide</h1>
+						<h1 style="text-align: center">La liste vide</h1>
 					</c:when>
 					<c:otherwise>
 
 						<table class="table table-hover">
 							<tr>
-								<th>Id seance</th>
+								<th>Id séance</th>
 								<th>type</th>
 								<th>temp</th>
 								<th>salle</th>
@@ -80,7 +80,7 @@
 		
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

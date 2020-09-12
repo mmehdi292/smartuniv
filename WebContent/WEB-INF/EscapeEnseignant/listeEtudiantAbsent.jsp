@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/template/header.jsp" />
-<title>Espace Enseignent </title>
+<title>Espace Enseignant </title>
 </head>
 
 <body>
@@ -14,25 +14,25 @@
 
 		<!--title page with add button start-->
 		<div class="titlePage">
-			<h2>Enrigster justification | la list des absences</h2>
+			<h2>Enregistrer justification | La liste des absences</h2>
 		</div>
 		<div class="tableDiv">
 			<div class="titlePage">
-			<h2>Note: coches les presents</h2>
+			<h2>Les étudiants absents</h2>
 			</div>
 			
 			<div class="table-responsive">
 				<c:choose>
 					<c:when test="${ empty sessionScope.absences}">
-						<h1 style="text-align: center">la liste vide</h1>
+						<h1 style="text-align: center">La liste vide</h1>
 					</c:when>
 					<c:otherwise>
 					<form action="EtudiantAbsencent" method="POST"  enctype="multipart/form-data">
 						<table class="table table-hover">
 							<tr>
 								<th>Nom</th>
-								<th>Prenom</th>
-								<th>action</th>
+								<th>Prénom</th>
+								<th>Télécharger une justification</th>
 							</tr>
 
 							<c:forEach var="et" items="${sessionScope.absences}">
@@ -46,7 +46,7 @@
 					</c:otherwise>
 					</c:choose>
 					
-					<input type="submit"  value="Enrigster les justification">
+					<input type="submit"  value="Enregistrer">
 				</form>
 			</div>
 			<!--table end-->
@@ -54,7 +54,7 @@
 		
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

@@ -2,7 +2,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/template/header.jsp" />
-<title>Gestion formations</title>
+<title>Gestion des formations</title>
 </head>
 
 <body>
@@ -19,7 +19,7 @@
 			<h2>Gestion des formations</h2>
 			<button
 				onclick="document.getElementById('id01').style.display='block'">
-				<i class="fas fa-user-plus"></i>Ajouter formations
+				<i class="fas fa-user-plus"></i>Ajouter un formation
 			</button>
 		</div>
 		<!--title page with add button end-->
@@ -29,13 +29,13 @@
 			<form class="modal-content animate" action="AjouterFormation"
 				method="post">
 				<div class="container1">
-					<h2>Ajouter formations</h2>
+					<h2>Ajouter un formation</h2>
 					<label><b>Nom de formations</b></label> <input type="text"
-						placeholder="Entrer nom de formations" name="nom" required>
-					<label><b>Abrivation formations</b></label>
-					<input type="text" placeholder="Entrer le abrformations" name="abr" required>
+						placeholder="Entrer le nom de formation" name="nom" required>
+					<label><b>Abréviation de formation</b></label>
+					<input type="text" placeholder="Entrer l'abréviation de formation" name="abr" required>
 					
-					<label for="spe"><b>specialite</b></label>
+					<label for="spe"><b>Spécialité</b></label>
 					<select id="spe" name="spe" >
 						<option value="GL">GL</option>
 						<option value="MI">MI</option>
@@ -44,15 +44,15 @@
 						<option value="TI">TI</option>
 					</select>
 					
-					<label for="cycle"><b>cycle</b></label>
+					<label for="cycle"><b>Cycle</b></label>
 					<select id="cycle" name="cycle">
-							<option value="licence">licence</option>
-							<option value="master">master</option>
+							<option value="licence">Licence</option>
+							<option value="master">Master</option>
 					</select>
 
-					<label><b>Annee</b></label>
-					<input type="number" placeholder="Entrer le Annee" name="Annee" min="1" max="5" required>
-					<label for="dep">Departement </label>
+					<label><b>Année</b></label>
+					<input type="number" placeholder="Entrer l'année" name="Annee" min="1" max="5" required>
+					<label for="dep">Département </label>
 					<select id="dep" name="dep">
 							<option value="TLSI">TLSI</option>
 							<option value="IFA">IFA</option>
@@ -73,18 +73,18 @@
 		<div class="tableDiv">
 			<!--filterage option start-->
 			<div class="text">
-				<h3>les opetions de filtrage</h3>
+				<h3>Filtrer</h3>
 				<input type="text" id="myInput" onkeyup="search()"
 					placeholder="Recherche...">
 				<div style="clear: both"></div>
 				<div class="opt">
-					<label>sexe <select onselect="">
-							<option value="">Aucan</option>
+					<label>Sexe <select onselect="">
+							<option value="">Aucun</option>
 							<option value="Homme">Homme</option>
 							<option value="Femme">Femme</option>
 					</select>
-					</label> <label>situation Familiale <select onselect="">
-							<option value="">Aucan</option>
+					</label> <label>Situation Familiale <select onselect="">
+							<option value="">Aucun</option>
 							<option value="marié">marié</option>
 							<option value="divorcé">divorcé</option>
 							<option value="séparé">séparé</option>
@@ -92,14 +92,14 @@
 							<option value="veuf">veuf</option>
 					</select>
 					</label>
-					<label>Departement<select onselect="">
-							<option value="">Aucan</option>
+					<label>Département<select onselect="">
+							<option value="">Aucun</option>
 							<option value="TLSI">TLSI</option>
 							<option value="IFA">IFA</option>
 							<option value="MI">MI</option>
 					</select></label>
 					 <label>Formation <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="GL">GL</option>
 							<option value="MI">MI</option>
 							<option value="SCI">SCI</option>
@@ -107,7 +107,7 @@
 							<option value="TI">TI</option>
 					</select>
 					</label> <label>Module <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="GL">GL</option>
 							<option value="MI">DAAW</option>
 							<option value="SCI">TL</option>
@@ -128,13 +128,13 @@
 
 						<table class="table table-hover">
 							<tr>
-								<th>Nom formation</th>
-								<th>abr formation</th>
-								<th>specialite</th>
-								<th>cycle</th>
-								<th>annee</th>
-								<th>departemnt</th>
-								<th>operration</th>
+								<th>Nom de formation</th>
+								<th>Abréviation de formation</th>
+								<th>Spécialité</th>
+								<th>Cycle</th>
+								<th>Année</th>
+								<th>Département</th>
+								<th>Opération</th>
 							</tr>
 
 							<c:forEach var="et" items="${sessionScope.Formations}">
@@ -173,7 +173,7 @@
 		</div>
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

@@ -1,11 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="/WEB-INF/template/header.jsp" />
-<title>Espace Enseignant </title>
+<title>Espace chef département </title>
 </head>
 
 <body>
-	<jsp:include page="/WEB-INF/template/ensSide.jsp" />
+	<jsp:include page="/WEB-INF/template/ChefSidebar.jsp" />
 	<!--content start-->
 	<div class="content">
 		<jsp:include page="/WEB-INF/template/topnavbar.jsp" />
@@ -30,21 +30,21 @@
 				</div>
 			</div>
 			</div>
-			<form action="EnregisterJustification" method="get">
+			<form action="EnregistrerJustificationParChef" method="get">
 			<div class="row">
 			<div class="col-md-4">
 			<c:choose>
 					<c:when test="${ empty sessionScope.emg}">
-						<h2 style="text-align: center">Aucune absence non justifiée dans vous groupes</h2>
+						<h2 style="text-align: center">Aucune absence non justifiée dans les groupes de votre département</h2>
 						<h3 style="text-align: center">Vous pouvez seulement modifier les justifications précédentes</h3>
 						
 					</c:when>
 					<c:otherwise>
-				<Select name="choix">
-				<c:forEach var="e" items="${sessionScope.emg}">
-					<option  value="${e.getGroupe().getIdGroupe()}-${e.getModule().getAbrModule()}-${e.getType()}">Groupe ${e.getGroupe().getNumGroupe()} ${e.getGroupe().getFormation().getAbrFormation()} ${e.getType()} ${e.getModule().getAbrModule()}</option>
-				</c:forEach>
-				</Select>
+						<Select name="choix">
+						<c:forEach var="e" items="${sessionScope.emg}">
+							<option  value="${e.getGroupe().getIdGroupe()}-${e.getModule().getAbrModule()}-${e.getType()}">Groupe ${e.getGroupe().getNumGroupe()} ${e.getGroupe().getFormation().getAbrFormation()} ${e.getType()} ${e.getModule().getAbrModule()}</option>
+						</c:forEach>
+						</Select>
 			</div>
 			<div class="col-md-1">
 				<input type="submit" value="OK">
@@ -54,7 +54,7 @@
 			
 			</form>
 			
-			<form action="EnregisterJustification" method="post">
+			<form action="EnregistrerJustificationParChef" method="post">
 				<div class="col-md-3"><input type="text" name="nom" placeholder="Entrer le nom"></div>
 				<div class="col-md-3"><input type="text" name="prenom" placeholder="Entrer le prénom"></div>
 				<div class="col-md-1"><input type="submit" value="OK"></div>
@@ -71,19 +71,21 @@
 						<table class="table table-hover">
 							<tr>
 								<th>Id séance</th>
+								<th>Type</th>
 								<th>Date et heure de séance</th>
 								<th>Salle</th>
 								<th>Avoir Absence</th>
-								<th>Operation</th>
+								<th>Opération</th>
 							</tr>
 
 							<c:forEach var="et" items="${sessionScope.Seances}">
 								<tr>
 									<td><c:out value="${et.getIdSeance()}"></c:out></td>
+									<td><c:out value="${et.getType()}"></c:out></td>
 									<td><fmt:formatDate value="${et.getTemp()}" type="date" pattern="yyyy/MM/dd hh:mm"/></td>
 									<td><c:out value="${et.getSalle()}"></c:out></td>
 									<td><c:out value="${et.isAvoirAbs()}"></c:out></td>
-									<td><a class="btn btn-success" href="EtudiantAbsencent?idgroupe=${sessionScope.groupe}&idseance=${et.getIdSeance()}">Voir la liste des etudiants</a></td>
+									<td><a class="btn btn-success" href="EtudiantAbsencent?idgroupe=${sessionScope.groupe}&idseance=${et.getIdSeance()}&role=chef">Voir la liste des étudiants</a></td>
 								</tr>
 							</c:forEach>
 						</table>

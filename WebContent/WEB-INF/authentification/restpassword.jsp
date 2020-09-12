@@ -27,15 +27,14 @@
 				<h5 class="card-title center">Université Constantine 2</h5>
 				<h5 class="card-title center">ABD EL HAMID MAHRI</h5>
 				<h5 class="card-title center">Système De Gestion des Absences</h5>
-				<p class="card-text center">© 2020 tous les droites sont
-					reserver</p>
+				<p class="card-text center">Tous droits réservés © 2020</p>
 			</div>
 			<div class="card colorA">
 				<form>
 					<div class="form-group">
 						<select id="language" class="form-control">
 							<option value="Française" selected>Française</option>
-							<option value="Anglaise">Anglaise</option>
+							<option value="Anglaise">Anglais</option>
 						</select>
 					</div>
 				</form>

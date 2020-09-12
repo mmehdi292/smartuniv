@@ -2,7 +2,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/template/header.jsp" />
-<title>Gestion Groupes</title>
+<title>Gestion des Groupes</title>
 </head>
 
 <body>
@@ -19,7 +19,7 @@
 			<h2>Gestion des Groupes</h2>
 			<button
 				onclick="document.getElementById('id01').style.display='block'">
-				<i class="fas fa-user-plus"></i>Ajouter Groupe
+				<i class="fas fa-user-plus"></i>Ajouter un Groupe
 			</button>
 		</div>
 		<!--title page with add button end-->
@@ -29,8 +29,8 @@
 			<form class="modal-content animate" action="AjouterGroupe"
 				method="post">
 				<div class="container1">
-					<h2>Ajouter Groupe</h2>
-					<label><b>numero groupe</b></label>
+					<h2>Ajouter un Groupe</h2>
+					<label><b>Numéro de groupe</b></label>
 					<input type="number" name="num" required>
 					<label><b>Section</b></label>
 					<input type="number" name="section" required>
@@ -55,18 +55,18 @@
 		<div class="tableDiv">
 			<!--filterage option start-->
 			<div class="text">
-				<h3>les opetions de filtrage</h3>
+				<h3>Filtrer</h3>
 				<input type="text" id="myInput" onkeyup="search()"
 					placeholder="Recherche...">
 				<div style="clear: both"></div>
 				<div class="opt">
-					<label>sexe <select onselect="">
-							<option value="">Aucan</option>
+					<label>Sexe <select onselect="">
+							<option value="">Aucun</option>
 							<option value="Homme">Homme</option>
 							<option value="Femme">Femme</option>
 					</select>
-					</label> <label>situation Familiale <select onselect="">
-							<option value="">Aucan</option>
+					</label> <label>Situation Familiale <select onselect="">
+							<option value="">Aucun</option>
 							<option value="marié">marié</option>
 							<option value="divorcé">divorcé</option>
 							<option value="séparé">séparé</option>
@@ -74,14 +74,14 @@
 							<option value="veuf">veuf</option>
 					</select>
 					</label>
-					<label>Departement<select onselect="">
-							<option value="">Aucan</option>
+					<label>Département<select onselect="">
+							<option value="">Aucun</option>
 							<option value="TLSI">TLSI</option>
 							<option value="IFA">IFA</option>
 							<option value="MI">MI</option>
 					</select></label>
 					 <label>Formation <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="GL">GL</option>
 							<option value="MI">MI</option>
 							<option value="SCI">SCI</option>
@@ -89,7 +89,7 @@
 							<option value="TI">TI</option>
 					</select>
 					</label> <label>Module <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="GL">GL</option>
 							<option value="MI">DAAW</option>
 							<option value="SCI">TL</option>
@@ -104,17 +104,17 @@
 			<div class="table-responsive">
 				<c:choose>
 					<c:when test="${ empty sessionScope.Groupes}">
-						<h1 style="text-align: center">la liste vide</h1>
+						<h1 style="text-align: center">La liste vide</h1>
 					</c:when>
 					<c:otherwise>
 
 						<table class="table table-hover">
 							<tr>
-								<th>id Groupe</th>
-								<th>Num Groupe</th>
+								<th>Id Groupe</th>
+								<th>Numéro Groupe</th>
 								<th>Section</th>
-								<th>abr Formation</th>
-								<th>operation</th>
+								<th>Formation</th>
+								<th>Opération</th>
 							</tr>
 
 							<c:forEach var="et" items="${sessionScope.Groupes}">
@@ -151,7 +151,7 @@
 		</div>
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <jsp:include page="/WEB-INF/template/header.jsp" />
-<title>Modifier Seance</title>
+<title>Modifier Séance</title>
 </head>
 
 <body>
@@ -14,14 +14,14 @@
 
 		<!--title page with add button start-->
 		<div class="titlePage">
-			<h2>Modifier Seance</h2>
+			<h2>Modification de Séance</h2>
 			<a href="GestionSeance"> <i class="fas fa-users"></i>
-				consulter les Seances
+				Consulter les Séances
 			</a>
 		</div>
 		<div class="tableDiv">
 			<form id="frm1" action="ModifierServlet?type=seance" method="POST" id="mf">
-				<h2>Seance de ${Seance.getIdSeance()}</h2>
+				<h2>Séance de ${Seance.getIdSeance()}</h2>
 				<div class="row">
 				<div class="col-sm-12">
 					<label for="type"><b>Type :</b></label>
@@ -39,17 +39,17 @@
 					<input type="Date" id="date"  value="<fmt:formatDate type="time" value="${Seance.getTemp()}" pattern="yyyy-MM-dd"/>" name="date" required>
 					</div>
 					<div class="col-sm-4">
-					<label for="heur"><b>Heur: </b></label>
+					<label for="heur"><b>Heure: </b></label>
 					<input type="number" id="heur" value="<fmt:formatDate type="time" value="${Seance.getTemp()}" pattern="HH"/>" name="heur" min="0" max="23" required>
 					</div>
 					<div class="col-sm-4">
-					<label for="min"><b>min: </b></label>
+					<label for="min"><b>Min: </b></label>
 					<input type="number" id="min" value="<fmt:formatDate type="time" value="${Seance.getTemp()}" pattern="mm"/>" name="min" min="0" max="59" required>
 					</div>
 				</div>	
 				<div class="row">
 					<div class="col-sm-6">
-					<label for="salle"><b>salle: </b></label>
+					<label for="salle"><b>Salle: </b></label>
 					<input type="number" id="salle" value="${Seance.getSalle()}" name="salle" required>
 					</div>
 					<div>
@@ -126,7 +126,7 @@
 		</div>
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

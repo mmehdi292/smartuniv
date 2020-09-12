@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/template/header.jsp" />
-<title>Espace Enseignent </title>
+<title>Espace Enseignant </title>
 </head>
 
 <body>
@@ -14,17 +14,17 @@
 
 		<!--title page with add button start-->
 		<div class="titlePage">
-			<h2>Faire l'appel | Modifier releve d'absence</h2>
+			<h2>Faire l'appel | Modifier le relevé d'absence</h2>
 		</div>
 		<div class="tableDiv">
 			<div class="titlePage">
-			<h2>Note: coches les presents</h2>
+			<h2>Note: coches les étudiants présents</h2>
 			</div>
 			
 			<div class="table-responsive">
 				<c:choose>
 					<c:when test="${ empty sessionScope.list}">
-						<h1 style="text-align: center">la liste vide</h1>
+						<h1 style="text-align: center">La liste vide</h1>
 					</c:when>
 					<c:otherwise>
 					<form action="appeleSeance" method="POST">
@@ -75,7 +75,7 @@
 		
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

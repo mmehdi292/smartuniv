@@ -13,7 +13,7 @@
 
 		<!--title page with add button start-->
 		<div class="titlePage">
-			<h2>Modifier Etudiant</h2>
+			<h2>Modification d'Etudiant</h2>
 			<a href="GestionEtudiant"> <i class="fas fa-users"></i>
 				consulter les Etudiants
 			</a>
@@ -36,7 +36,7 @@
 							value="${Etudiant.getNom()}" class="modiferInput" name="nom">
 					</div>
 					<div class="col-sm-3">
-						<label>Prenom: </label> <input type="text"
+						<label>Prénom: </label> <input type="text"
 							value="${Etudiant.getPrenom()}" class="modiferInput"
 							name="prenom">
 					</div>
@@ -46,7 +46,7 @@
 							name="email">
 					</div>
 					<div class="col-sm-3">
-						<label>Mot de pass: </label> <input type="Password"
+						<label>Mot de passe: </label> <input type="Password"
 							class="modiferInput" name="password">
 					</div>
 				</div>
@@ -141,7 +141,7 @@
 		</div>
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

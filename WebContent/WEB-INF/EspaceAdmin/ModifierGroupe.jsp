@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/template/header.jsp" />
-<title>Modifier Module</title>
+<title>Modifier Groupe</title>
 </head>
 
 <body>
@@ -13,9 +13,9 @@
 
 		<!--title page with add button start-->
 		<div class="titlePage">
-			<h2>Modifier Groupe</h2>
+			<h2>Modification de Groupe</h2>
 			<a href="GestionGroupe"> <i class="fas fa-users"></i>
-				consulter les Groupes
+				Consulter les Groupes
 			</a>
 		</div>
 		<div class="tableDiv">
@@ -23,14 +23,14 @@
 				<h2>Groupe de id :  ${Groupe.getIdGroupe()}</h2>
 				<div class="row">
 					<div class="col-sm-12">
-						<label>Num Groupe: </label> <input type="number"
+						<label>Numéro de Groupe: </label> <input type="number"
 							value="${Groupe.getNumGroupe()}" class="modiferInput"
 							name="num">
 					</div>
 				</div>
 				<div class="row">
 				<div class="col-sm-6">
-						<label>section: </label> <input type="number"
+						<label>Section: </label> <input type="number"
 							value="${Groupe.getSection()}"class="modiferInput"
 							name="section">
 					</div>
@@ -61,7 +61,7 @@
 		</div>
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

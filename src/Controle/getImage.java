@@ -37,7 +37,7 @@ public class getImage extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+/*
 		HttpSession session = request.getSession();
 		InputStream photo = (InputStream) session.getAttribute("image");
 		byte byteArray[] = photo.readAllBytes();
@@ -47,7 +47,7 @@ public class getImage extends HttpServlet {
 		os.flush();
 		os.close();
 		session.removeAttribute("image");
-	}
+	*/}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse

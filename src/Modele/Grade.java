@@ -2,5 +2,8 @@ package Modele;
 
 public enum Grade {
 	MaitreDeConférenceClasseA,
-	MaitreDeConférenceClasseB
+	MaitreDeConférenceClasseB,
+	MaitreAssistantClasseA,
+	MaitreAssistantClasseB,
+	Professeur
 }

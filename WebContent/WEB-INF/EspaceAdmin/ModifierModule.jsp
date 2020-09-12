@@ -13,7 +13,7 @@
 
 		<!--title page with add button start-->
 		<div class="titlePage">
-			<h2>Modifier Module</h2>
+			<h2>Modification de Module</h2>
 			<a href="GestionModule"> <i class="fas fa-users"></i>
 				consulter les Modules
 			</a>
@@ -27,14 +27,14 @@
 							value="${Module.getNomModule()}" class="modiferInput" name="nom">
 					</div>
 					<div class="col-sm-6">
-						<label>abrivation de module: </label> <input type="text"
+						<label>Abréviation de module: </label> <input type="text"
 							value="${Module.getAbrModule()}" class="modiferInput"
 							name="abrModule">
 					</div>
 				</div>
 				<div class="row">
 				<div class="col-sm-6">
-						<label>semater: </label> <input type="number"
+						<label>Semestre: </label> <input type="number"
 							value="${Module.getSemester()}" min="1" max="6" class="modiferInput"
 							name="semester">
 					</div>
@@ -65,7 +65,7 @@
 		</div>
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

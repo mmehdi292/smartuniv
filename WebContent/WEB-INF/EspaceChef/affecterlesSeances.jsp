@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/template/header.jsp" />
-<title>Espace Chef Departement</title>
+<title>Espace Chef Département</title>
 </head>
 
 <body>
@@ -14,12 +14,12 @@
 
 		<!--title page with add button start-->
 		<div class="titlePage">
-			<h2>Affecter les seances aux ensignants</h2>
+			<h2>Affecter les séances aux enseignants</h2>
 		</div>
 		
 		<div class="tableDiv">
 			<div class="titlePage">
-				<h2>Choose le module</h2>
+				<h2>Choix de module</h2>
 			</div>
 			<form action="AffecterLesSeance" method="get">
 			<div class="row">
@@ -49,8 +49,8 @@
 						<table class="table table-hover">
 							<tr>
 								<th>Groupe</th>
-								<th>type</th>
-								<th>ensignents</th>
+								<th>Type</th>
+								<th>Enseignant</th>
 							</tr>
 
 							<c:forEach var="et" items="${sessionScope.groupes}">
@@ -62,7 +62,7 @@
 										<select name="${et.getIdGroupe()}-${type}">
 											<option value="">Aucun</option>
 											<c:forEach var="enseignent" items="${sessionScope.enseignents}">
-												<% boolean b = false; %>
+												<% Boolean b = false; %>
 												<c:forEach var="deja" items="${sessionScope.dejaAffecter}">
 													<c:if test="${et.getIdGroupe() eq deja.getGroupe().getIdGroupe() and enseignent.getUsername() eq deja.getEnsiegnent().getUsername() and type eq deja.getType()}">
 														<option value="${enseignent.getUsername()}" selected>${enseignent.getNom()} ${enseignent.getPrenom()}</option>
@@ -90,7 +90,7 @@
 		
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

@@ -44,7 +44,7 @@ public class EtudiantAbsenceParUsername extends HttpServlet {
 		OperationEtudiant oe = new OperationEtudiant();
 		OperationEnseignent oe1 = new OperationEnseignent();
 		ArrayList<Absence> absences = oe.getAbsenceParUsername(username);
-		session.setAttribute("message","ajouter echoue");
+		session.setAttribute("message","L'ajout est échoue");
 		session.setAttribute("etat","échoué");
 		for(Absence a : absences) {
 			Part photo = request.getPart(a.getIdAbsence()+"");
@@ -52,7 +52,7 @@ public class EtudiantAbsenceParUsername extends HttpServlet {
 				InputStream justification = photo.getInputStream();
 				oe1.insertJustification(a.getIdAbsence(), justification);
 				System.out.println("ok________________1");
-				session.setAttribute("message","ajouter avec succes");
+				session.setAttribute("message","ajouter avec succès");
 				session.setAttribute("etat","Succès");
 			}
 		}

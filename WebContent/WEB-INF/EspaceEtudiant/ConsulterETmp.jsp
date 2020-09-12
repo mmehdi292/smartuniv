@@ -15,7 +15,7 @@
 
 		<!--title page with add button start-->
 		<div class="titlePage">
-			<h2>L'EMPLOI DE TEMPS</h2>
+			<h2>L'emploi de temps</h2>
 		</div>
 		<div class="tableDiv">
 
@@ -37,7 +37,7 @@
 		
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

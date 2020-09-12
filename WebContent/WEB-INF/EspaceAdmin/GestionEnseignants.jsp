@@ -2,7 +2,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/template/header.jsp" />
-<title>Gestion Enseignants</title>
+<title>Gestion des Enseignants</title>
 </head>
 
 <body>
@@ -19,7 +19,7 @@
 			<h2>Gestion des enseignants</h2>
 			<button
 				onclick="document.getElementById('id01').style.display='block'">
-				<i class="fas fa-user-plus"></i>Ajouter enseignant
+				<i class="fas fa-user-plus"></i>Ajouter un enseignant
 			</button>
 		</div>
 		<!--title page with add button end-->
@@ -29,20 +29,20 @@
 			<form class="modal-content animate" action="AjouterEnseignant"
 				method="post" enctype="multipart/form-data">
 				<div class="container1">
-					<h2>Ajouter enseignant</h2>
-					<label><b>Username</b></label> <input type="text"
-						placeholder="Entrer Username" name="username" required> <label><b>Nom</b></label>
+					<h2>Ajouter un enseignant</h2>
+					<label><b>Nom d'utilisateur</b></label> <input type="text"
+						placeholder="Entrer le nom d'utilisateur" name="username" required> <label><b>Nom</b></label>
 					<input type="text" placeholder="Entrer le nom" name="nom" required>
 
-					<label><b>Prenom</b></label> <input type="text"
-						placeholder="Entrer le prenom" name="prenom" required> <label><b>Email</b></label>
-					<input type="email" placeholder="Entrer email" name="email"
-						required> <label><b>Mot de pass</b></label> <input
-						type="password" placeholder="Entrer le mot de pass"
+					<label><b>Prénom</b></label> <input type="text"
+						placeholder="Entrer le prénom" name="prenom" required> <label><b>Email</b></label>
+					<input type="email" placeholder="Entrer l'email" name="email"
+						required> <label><b>Mot de passe</b></label> <input
+						type="password" placeholder="Entrer le mot de passe"
 						name="password" required> <label><b>Date de
-							naissance</b></label> <input type="date" name="dn" required> <label><b>liue
+							naissance</b></label> <input type="date" name="dn" required> <label><b>Lieu
 							de naissance</b></label> <input type="text"
-						placeholder="Entrer le liue de naissance" name="ln" required>
+						placeholder="Entrer le lieu de naissance" name="ln" required>
 
 					<label><b>Sexe</b></label> <select name="sexe" required>
 						<option value="Homme">Homme</option>
@@ -50,7 +50,7 @@
 					</select> <label><b>Addresse</b></label>
 					<textarea name="addresse"></textarea>
 
-					<label><b>situation Familiale</b></label> <select name="sf">
+					<label><b>Situation Familiale</b></label> <select name="sf">
 						<option value="marié">marié</option>
 						<option value="divorcé">divorcé</option>
 						<option value="séparé">séparé</option>
@@ -63,14 +63,14 @@
 						<option value="MaitreDeConférenceClasseB">MaitreDeConférenceClasseB</option>
 					</select>
 					<center>
-						<label><b>administrateur</b><input type="checkbox"
-							value="admin" name="admin"></label> <label><b>chef de
-								departemet</b><input type="checkbox" value="chef" name="chef"
+						<label><b>Administrateur</b><input type="checkbox"
+							value="admin" name="admin"></label> <label><b>Chef
+								départemet</b><input type="checkbox" value="chef" name="chef"
 							id="chef" onclick="checkRes"></label> <label><b>Responsable</b><input
 							type="checkbox" value="res" name="res" id="res"></label>
 					</center>
 					<div id="chefAction">
-						<label><b>Nom de departement </b></label> <select
+						<label><b>Nom de département </b></label> <select
 							name="departement">
 							<option value="TLSI">TLSI</option>
 							<option value="IFA">IFA</option>
@@ -104,18 +104,18 @@
 		<div class="tableDiv">
 			<!--filterage option start-->
 			<div class="text">
-				<h3>les opetions de filtrage</h3>
+				<h3>Filtrer</h3>
 				<input type="text" id="myInput" onkeyup="search()"
 					placeholder="Recherche...">
 				<div style="clear: both"></div>
 				<div class="opt">
 					<label>sexe <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="Homme">Homme</option>
 							<option value="Femme">Femme</option>
 					</select>
 					</label> <label>situation Familiale <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="marié">marié</option>
 							<option value="divorcé">divorcé</option>
 							<option value="séparé">séparé</option>
@@ -123,18 +123,18 @@
 							<option value="veuf">veuf</option>
 					</select>
 					</label> <label>Grade <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="MaitreDeConférenceClasseA">MaitreDeConférenceClasseA</option>
 							<option value="MaitreDeConférenceClasseB">MaitreDeConférenceClasseB</option>
 					</select>
-					</label> <label>Departement <select onselect="">
-							<option value="">Aucan</option>
+					</label> <label>Département <select onselect="">
+							<option value="">Aucun</option>
 							<option value="TLSI">TLSI</option>
 							<option value="IFA">IFA</option>
 							<option value="MI">MI</option>
 					</select>
 					</label> <label>Formation <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="GL">GL</option>
 							<option value="MI">MI</option>
 							<option value="SCI">SCI</option>
@@ -142,7 +142,7 @@
 							<option value="TI">TI</option>
 					</select>
 					</label> <label>Module <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="GL">GL</option>
 							<option value="MI">DAAW</option>
 							<option value="SCI">TL</option>
@@ -151,7 +151,7 @@
 					</select>
 					</label>
 					</label> <label>Role <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="GL">Admin</option>
 							<option value="MI">ENS</option>
 							<option value="SCI">RES</option>
@@ -171,14 +171,14 @@
 
 						<table class="table table-hover">
 							<tr>
-								<th>nom</th>
-								<th>prenom</th>
-								<th>username</th>
-								<th>email</th>
-								<th>date de naissance</th>
-								<th>lieu de naissance</th>
-								<th>sexe</th>
-								<th>operation</th>
+								<th>Nom</th>
+								<th>Prénom</th>
+								<th>Nom d'utilisateur</th>
+								<th>Email</th>
+								<th>Date de naissance</th>
+								<th>Lieu de naissance</th>
+								<th>Sexe</th>
+								<th>Opération</th>
 							</tr>
 
 							<c:forEach var="ens" items="${sessionScope.enseignents}">
@@ -218,7 +218,7 @@
 		</div>
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

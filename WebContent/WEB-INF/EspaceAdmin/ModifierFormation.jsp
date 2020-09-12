@@ -13,9 +13,9 @@
 
 		<!--title page with add button start-->
 		<div class="titlePage">
-			<h2>Modifier Formation</h2>
+			<h2>Modification de Formation</h2>
 			<a href="GestionFormation"> <i class="fas fa-users"></i>
-				consulter les Formation
+				Consulter les Formations
 			</a>
 		</div>
 		<div class="tableDiv">
@@ -27,14 +27,14 @@
 							value="${Formation.getNomFormation()}" class="modiferInput" name="nom">
 					</div>
 					<div class="col-sm-6">
-						<label>abrivation de Formation: </label> <input type="text"
+						<label>Abréviation de Formation: </label> <input type="text"
 							value="${Formation.getAbrFormation()}" class="modiferInput"
 							name="abr">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-6">
-								<label for="spe">specialite</label>
+								<label for="spe">Spécialité</label>
 						<select id="spe" name="spe">
 							<c:choose>
 								<c:when test="${Formation.getSpecialite() eq 'GL'}">
@@ -93,12 +93,12 @@
 				</div>
 				<div class="row">
 				<div class="col-sm-6">
-						<label>Annee: </label> <input type="number"
+						<label>Année: </label> <input type="number"
 							value="${Formation.getAnnee()}" min="1" max="5" class="modiferInput"
 							name="Annee">
 					</div>
 					<div class="col-sm-6">
-					<label for="dep">Departement</label>
+					<label for="dep">Département</label>
 					<select id="dep" name="dep">
 							<c:choose>
 								<c:when test="${Formation.getDepartement() eq 'TLSI'}">
@@ -131,7 +131,7 @@
 		</div>
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

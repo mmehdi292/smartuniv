@@ -35,7 +35,8 @@
 		</div>
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
+
 		</div>
 		<!--sidebar end-->
 		<script type="text/javascript">

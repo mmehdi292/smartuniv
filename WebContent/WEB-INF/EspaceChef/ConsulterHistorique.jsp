@@ -1,12 +1,13 @@
 
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
 <jsp:include page="/WEB-INF/template/header.jsp" />
-<title>Gestion des Vacances</title>
+<title>Consulter l'Historique</title>
 </head>
 
 <body>
-	<jsp:include page="/WEB-INF/template/sidebar.jsp" />
+	<jsp:include page="/WEB-INF/template/ChefSidebar.jsp" />
 	<!--content start-->
 	<div class="content">
 		<jsp:include page="/WEB-INF/template/topnavbar.jsp" />
@@ -16,40 +17,9 @@
 
 		<!--title page with add button start-->
 		<div class="titlePage">
-			<h2>Gestion des Vacances</h2>
-			<button
-				onclick="document.getElementById('id01').style.display='block'">
-				<i class="fas fa-user-plus"></i>Ajouter une Vacance
-			</button>
+			<h2>Historique</h2>
 		</div>
 		<!--title page with add button end-->
-		<!--add modal start-->
-		<div id="id01" class="modal">
-
-			<form class="modal-content animate" action="AjouterVacance"
-				method="post">
-				<div class="container1">
-					<h2>Ajouter une Vacance</h2>
-					<label><b>Nom de Vacances</b></label> <input type="text" placeholder="Entrer nom de vacance" name="nom" required>
-					
-					<label><b>Date du début</b></label>
-					<input type="date" name="dateD" required>
-					
-					<label><b>Date du fin</b></label>
-					<p style="color:red; font-size:18px;">La date de fin no inclus</p>
-					<input type="date" name="dateF" required>
-
-					<input type="submit" value="Ajouter" class="submitbtn"> <input
-						type="reset" value="Supprimer content" class="cancelbtn">
-					<input type="button" value="Cancel"
-						onclick="document.getElementById('id01').style.display='none'"
-						class="cancelbtn">
-				</div>
-
-
-			</form>
-		</div>
-		<!--add modal start-->
 		<!--table start-->
 		<div class="tableDiv">
 			<!--filterage option start-->
@@ -59,18 +29,23 @@
 					placeholder="Recherche...">
 				<div style="clear: both"></div>
 				<div class="opt">
-					<label>Sexe <select onselect="">
+					<label>sexe <select onselect="">
 							<option value="">Aucun</option>
 							<option value="Homme">Homme</option>
 							<option value="Femme">Femme</option>
 					</select>
-					</label> <label>Situation Familiale <select onselect="">
-							<option value="">Aucan</option>
+					</label> <label>situation Familiale <select onselect="">
+							<option value="">Aucun</option>
 							<option value="marié">marié</option>
 							<option value="divorcé">divorcé</option>
 							<option value="séparé">séparé</option>
 							<option value="célibataire">célibataire</option>
 							<option value="veuf">veuf</option>
+					</select>
+					</label> <label>Grade <select onselect="">
+							<option value="">Aucun</option>
+							<option value="MaitreDeConférenceClasseA">MaitreDeConférenceClasseA</option>
+							<option value="MaitreDeConférenceClasseB">MaitreDeConférenceClasseB</option>
 					</select>
 					</label> <label>Département <select onselect="">
 							<option value="">Aucun</option>
@@ -95,36 +70,39 @@
 							<option value="TI">ASD</option>
 					</select>
 					</label>
+					</label> <label>Role <select onselect="">
+							<option value="">Aucun</option>
+							<option value="GL">Admin</option>
+							<option value="MI">ENS</option>
+							<option value="SCI">RES</option>
+							<option value="SI">Chef</option>
+					</select>
+					</label>
 				</div>
 			</div>
 			<!--filterage option end-->
 			<!--table  start-->
 			<div class="table-responsive">
 				<c:choose>
-					<c:when test="${ empty sessionScope.Vacances}">
-						<h1 style="text-align: center">la liste vide</h1>
+					<c:when test="${ empty sessionScope.HistoriquesChef}">
+						<h1 style="text-align: center">La liste vide</h1>
 					</c:when>
 					<c:otherwise>
 
 						<table class="table table-hover">
 							<tr>
-								<th>Id de vacance</th>
-								<th>Date de vacance</th>
-								<th>Description</th>
-								<th>Opération</th>
+								<th>Id Historique</th>
+								<th>Nom d'utilisateur</th>
+								<th>Date</th>
+								<th>Action</th>
 							</tr>
 
-							<c:forEach var="et" items="${sessionScope.Vacances}">
+							<c:forEach var="ens" items="${sessionScope.HistoriquesChef}">
 								<tr>
-									<td><c:out value="${et.getId()}"></c:out></td>
-									<td><c:out value="${et.getDate()}"></c:out></td>
-									<td><c:out value="${et.getDescription()}"></c:out></td>
-									<td><a
-										href="Modifier?type=vacance&abr=${et.getId()}"><i
-											class="fas fa-user-edit fa-lg"></i></a> <a
-										href="Supprimer?type=vacance&abr=${et.getId()}"
-										onclick="return(confirm('Etes-vous sûr de vouloir supprimer \n ${et.getDescription()}'));"><i
-											class="fas fa-trash-alt fa-lg"></i></a></td>
+									<td><c:out value="${ens.getIdHistorique()}"></c:out></td>
+									<td><c:out value="${ens.getUsername()}"></c:out></td>
+									<td><fmt:formatDate type="time" value="${ens.getDate()}" pattern="yyyy-MM-dd HH:mm:ss"/>  </td>
+									<td><c:out value="${ens.getAction()}"></c:out></td>
 								</tr>
 							</c:forEach>
 						</table>
@@ -154,6 +132,24 @@
 	<!--sidebar end-->
 	<script>
 		var modal = document.getElementById('id01');
+		var chef = document.getElementById('chefAction');
+		var res = document.getElementById('resAction');
+		document.getElementById('chef').addEventListener('click', checkChef);
+		document.getElementById('res').addEventListener('click', checkRes);
+		function checkChef() {
+			if (document.getElementById('chef').checked) {
+				chef.style.display = "block";
+			} else {
+				chef.style.display = "none";
+			}
+		}
+		function checkRes() {
+			if (document.getElementById('res').checked) {
+				res.style.display = "block";
+			} else {
+				res.style.display = "none";
+			}
+		}
 		window.onclick = function(event) {
 			if (event.target == modal) {
 				modal.style.display = "none";

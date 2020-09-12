@@ -135,6 +135,79 @@ public class OperationChefDepartement {
 			System.out.println("connection start ok");
 			return ae;
 		}
+
+		public ArrayList<Seance> seanceModuleGroupeDep(String departement) {
+			ArrayList<Seance> ae=new ArrayList<Seance>();
+			ConnectionBD bd=new ConnectionBD();
+			bd.startConnection();
+			ae=bd.seanceModuleGroupeDep(departement);
+			bd.endConnection();
+			System.out.println("connection start ok");
+			return ae;
+		}
+		public ArrayList<Seance> getSeances(int groupe, String module, String type) {
+			ConnectionBD bd = new ConnectionBD();
+			bd.startConnection();
+			ArrayList<Seance> s = bd.getSeances(groupe, module, type);
+			bd.endConnection();
+			return s;
+		}
+
+		public ArrayList<Absence> listeAbsencesJustifie(String departement) {
+			ConnectionBD bd = new ConnectionBD();
+			bd.startConnection();
+			ArrayList<Absence> b = bd.listeAbsencesJustifie(departement);
+			bd.endConnection();
+			return b;
+		}
+
+		public Absence getAbsence(int idAbsence) {
+			ConnectionBD bd = new ConnectionBD();
+			bd.startConnection();
+			Absence a = bd.getAbsence(idAbsence);
+			bd.endConnection();
+			return a;
+		}
+
+		public boolean accepterJustification(int idAbsence) {
+			ConnectionBD bd = new ConnectionBD();
+			bd.startConnection();
+			boolean b = bd.accepterJustification(idAbsence);
+			bd.endConnectionWithOutResult();
+			return b;
+		}
+		public boolean refuserJustification(int idAbsence) {
+			ConnectionBD bd = new ConnectionBD();
+			bd.startConnection();
+			boolean b = bd.refuserJustification(idAbsence);
+			bd.endConnectionWithOutResult();
+			return b;
+		}
+
+		public ArrayList<Absence> getAbsenceParNom(String nom, String prenom, String departement) {
+			ConnectionBD bd = new ConnectionBD();
+			bd.startConnection();
+			ArrayList<Absence>  b = bd.getAbsenceParNom(nom,prenom,departement);
+			bd.endConnectionWithOutResult();
+			return b;
+		}
+		//-------------------- gestion historique ------------------
+		// conslutation
+		public ArrayList<Historique> consulterHistoriqueChef(String departement) {
+			ConnectionBD bd = new ConnectionBD();
+			bd.startConnection();
+			ArrayList<Historique> his = bd.consulterHistoriqueChef(departement);
+			bd.endConnection();
+			return his;
+		}
+		public String getDepartementUtilisateur(String username) {
+			ConnectionBD bd = new ConnectionBD();
+			bd.startConnection();
+			String his = bd.getDepartementUtilisateur(username);
+			bd.endConnection();
+			return his;
+		}
+		
 		
 		
 		

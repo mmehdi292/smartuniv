@@ -32,7 +32,7 @@
 
 		<!--title page with add button start-->
 		<div class="titlePage">
-			<h2>Modifier profil</h2>
+			<h2>Modifier le profil</h2>
 		</div>
 		<div class="tableDiv">
 			<form id="frm1" action="ModifierProfileServlet" method="POST" id="mf" enctype="multipart/form-data">
@@ -42,7 +42,7 @@
 						<c:set var="image" value="${Enseignent.getPhoto()}"
 							scope="session" />
 						<img alt="profil" id="profil" src="getImage"> <label
-							class="inputFile" for="photo">Modifier Photo</label> <input
+							class="inputFile" for="photo">Modifier la photo</label> <input
 							type="file" name="photo" id="photo" style="display: none">
 					</div>
 					<div class="col-sm-6">
@@ -58,7 +58,7 @@
 							value="${Enseignent.getNom()}" class="modiferInput" name="nom">
 					</div>
 					<div class="col-sm-3">
-						<label>Prenom: </label> <input type="text"
+						<label>Prénom: </label> <input type="text"
 							value="${Enseignent.getPrenom()}" class="modiferInput"
 							name="prenom">
 					</div>
@@ -68,7 +68,7 @@
 							name="email">
 					</div>
 					<div class="col-sm-3">
-						<label>Mot de pass: </label> <input type="Password"
+						<label>Mot de passe: </label> <input type="Password"
 							class="modiferInput" name="password">
 					</div>
 				</div>
@@ -167,7 +167,7 @@
 						</label>
 					</div>
 					<div class="col-sm-4">
-						<label>chef de departemet
+						<label>chef département
 							<c:choose>
 							<c:when test="${ChefDepartement.getUsername() eq Enseignent.getUsername()}">
 								<input type="checkbox" value="chef" name="chef" checked>
@@ -194,7 +194,7 @@
 
 				<div class="row">
 					<div class="col-sm-6" id="chefAction">
-						<label><b>Nom de departement</b></label> <select
+						<label><b>Nom de département</b></label> <select
 							name="departement">
 							<option value="TLSI">TLSI</option>
 							<option value="IFA">IFA</option>
@@ -222,7 +222,7 @@
 		</div>
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

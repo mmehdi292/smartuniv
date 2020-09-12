@@ -12,6 +12,14 @@ public class OperationEnseignent {
 		bd.endConnection();
 		return m;
 	}
+	// les groupes d'un enseignant
+		public ArrayList<EnseiModuleGroupe> enseiModuleGroupePourFaireAppel(String username) {
+			ConnectionBD bd = new ConnectionBD();
+			bd.startConnection();
+			ArrayList<EnseiModuleGroupe> m = bd.enseiModuleGroupePourFaireAppel(username);
+			bd.endConnection();
+			return m;
+		}
 	
 	public ArrayList<Absence> getInfoAbsencesPourListeExclusPourTroisAbsencesEns(String username){
 		ArrayList<Absence> ae=new ArrayList<Absence>();
@@ -40,6 +48,14 @@ public class OperationEnseignent {
 		bd.endConnection();
 		return s;
 	}
+	// les groupes d'un enseingnant
+		public ArrayList<Seance> getSeancesPourFaireAppel(int groupe, String module, String type) {
+			ConnectionBD bd = new ConnectionBD();
+			bd.startConnection();
+			ArrayList<Seance> s = bd.getSeancesPourFaireAppel(groupe, module, type);
+			bd.endConnection();
+			return s;
+		}
 
 	// les etudiants d'un groupe
 	public ArrayList<Etudiant> getEtudiantGroupe(int groupe) {
@@ -77,10 +93,10 @@ public class OperationEnseignent {
 		return b;
 	}
 	// ajoutes les absences
-		public ArrayList<Absence> getAbsencesDunSeanceAvacEtudaint(int idseance) {
+		public ArrayList<Absence> getAbsencesDunSeanceAvecEtudiant(int idseance) {
 			ConnectionBD bd = new ConnectionBD();
 			bd.startConnection();
-			ArrayList<Absence> b = bd.getAbsencesDunSeanceAvacEtudaint(idseance);
+			ArrayList<Absence> b = bd.getAbsencesDunSeanceAvecEtudiant(idseance);
 			bd.endConnection();
 			return b;
 		}
@@ -94,6 +110,13 @@ public class OperationEnseignent {
 		return b;
 	}
 	//
+	public ArrayList<Absence> getAbsenceParNom(String nom,String prenom, ArrayList<Integer> arg) {
+		ConnectionBD bd = new ConnectionBD();
+		bd.startConnection();
+		ArrayList<Absence>  b = bd.getAbsenceParNom(nom,prenom,arg);
+		bd.endConnectionWithOutResult();
+		return b;
+	}
 	public ArrayList<Absence> getAbsenceParNom(String nom,String prenom) {
 		ConnectionBD bd = new ConnectionBD();
 		bd.startConnection();
@@ -118,6 +141,15 @@ public class OperationEnseignent {
 		bd.endConnectionWithOutResult();
 		return ars;
 	}
+	public ArrayList<Integer> getIdGroupesDUnEnseignant(String username){
+		ConnectionBD bd=new ConnectionBD();
+		bd.startConnection();
+		ArrayList<Integer> arg=bd.getIdGroupesDUnEnseignant(username);
+		bd.endConnectionWithOutResult();
+		return arg;
+	}
+	
+	
 	
 	
 }

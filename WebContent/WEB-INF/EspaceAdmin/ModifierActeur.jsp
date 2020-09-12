@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/template/header.jsp" />
-<title>Modifier Enseignants</title>
+<title>Modifier des Enseignants</title>
 </head>
 
 <body>
@@ -13,9 +13,9 @@
 
 		<!--title page with add button start-->
 		<div class="titlePage">
-			<h2>Modifier enseignants</h2>
+			<h2>Modification d'Enseignant</h2>
 			<a href="GestionEnseignant"> <i class="fas fa-users"></i>
-				consulter les enseignants
+				Consulter les enseignants
 			</a>
 		</div>
 		<div class="tableDiv">
@@ -42,7 +42,7 @@
 							value="${Enseignent.getNom()}" class="modiferInput" name="nom">
 					</div>
 					<div class="col-sm-3">
-						<label>Prenom: </label> <input type="text"
+						<label>Prénom: </label> <input type="text"
 							value="${Enseignent.getPrenom()}" class="modiferInput"
 							name="prenom">
 					</div>
@@ -52,7 +52,7 @@
 							name="email">
 					</div>
 					<div class="col-sm-3">
-						<label>Mot de pass: </label> <input type="Password"
+						<label>Mot de passe: </label> <input type="Password"
 							class="modiferInput" name="password">
 					</div>
 				</div>
@@ -138,7 +138,7 @@
 				<div class="row" align="center">
 					<div class="col-sm-4">
 					${Administrateur.getUsername() eq Enseignent.getUsername()}
-						<label>administrateur
+						<label>Administrateur
 						<c:choose>
 							
 							<c:when test="${Administrateur.getUsername() eq Enseignent.getUsername()}">
@@ -151,7 +151,7 @@
 						</label>
 					</div>
 					<div class="col-sm-4">
-						<label>chef de departemet
+						<label>Chef départemet
 							<c:choose>
 							<c:when test="${ChefDepartement.getUsername() eq Enseignent.getUsername()}">
 								<input type="checkbox" value="chef" name="chef" checked>
@@ -163,7 +163,7 @@
 						</label>
 					</div>
 					<div class="col-sm-4">
-						<label>Responsable
+						<label>Responsable de foramtion
 						<c:choose>
 							<c:when test="${ResponsableDeFormation.getUsername() eq Enseignent.getUsername()}">
 								<input type="checkbox" value="res" name="res" checked>
@@ -178,7 +178,7 @@
 
 				<div class="row">
 					<div class="col-sm-6" id="chefAction">
-						<label><b>Nom de departement</b></label> <select
+						<label><b>Nom de département</b></label> <select
 							name="departement">
 							<option value="TLSI">TLSI</option>
 							<option value="IFA">IFA</option>
@@ -206,7 +206,7 @@
 		</div>
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

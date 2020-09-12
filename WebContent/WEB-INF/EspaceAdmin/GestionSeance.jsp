@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <jsp:include page="/WEB-INF/template/header.jsp" />
-<title>Gestion Seances</title>
+<title>Gestion des Séances</title>
 </head>
 
 <body>
@@ -13,7 +13,7 @@
 		<jsp:include page="/WEB-INF/template/topnavbar.jsp" />
 		<div class="titlePage">
 		<div class="alert alert-info">
-						<strong>Faites attention!</strong> Attention tu dois m'assurer d'inclure tous les jours fériés, les vacons et les evenments tout au long de l'année <a href="GestionVacance">Gestion des jours fériés</a>			
+						<strong>Fait attention!</strong> Attention tu dois m'assurer d'inclure tous les jours fériés, les vacances et les évènements tout au long de l'année <a href="GestionVacance">Gestion des jours fériés</a>			
 					</div>
 					</div>
 		<jsp:include page="/WEB-INF/template/message.jsp" />
@@ -22,10 +22,10 @@
 
 		<!--title page with add button start-->
 		<div class="titlePage">
-			<h2>Gestion des Seances</h2>
+			<h2>Gestion des Séances</h2>
 			<button
 				onclick="document.getElementById('id01').style.display='block'">
-				<i class="fas fa-user-plus"></i>Ajouter Seances
+				<i class="fas fa-user-plus"></i>Ajouter une Séance
 			</button>
 		</div>
 		<!--title page with add button end-->
@@ -35,7 +35,7 @@
 			<form class="modal-content animate" action="AjouterSeance"
 				method="post">
 				<div class="container1">
-					<h2>Ajouter Seances</h2>
+					<h2>Ajouter une Séance</h2>
 					<label for="type"><b>Type :</b></label>
 					<select id="type" name="type">
 						<option value="TD">TD</option>
@@ -43,41 +43,41 @@
 						<option value="COUR">COUR</option>
 					</select>
 					
-					<label for="nbr"><b>Nomber des seance par semain :</b></label>
+					<label for="nbr"><b>Nombre des séances par semaine :</b></label>
 					<select id="nbr" name="nbr">
 						<option value="1" selected>1</option>
 						<option value="2">2</option>
 					</select>
 					
-					<label for="total"><b>Nombre des seance totale: </b></label>
+					<label for="total"><b>Nombre des séances totale: </b></label>
 					<input type="number" id="total" name="total" >
 					
 					<fieldset>
-						<legend id = "s1Title">Seance 1</legend>
+						<legend id = "s1Title">Séance 1</legend>
 					<label for="date"><b>Date: </b></label>
 					<input type="Date" id="date" name="date" required>
 					
-					<label for="heur"><b>Heur: </b></label>
+					<label for="heur"><b>Heure: </b></label>
 					<input type="number" id="heur" name="heur" min="0" max="23" required>
 					
-					<label for="min"><b>min: </b></label>
+					<label for="min"><b>Min: </b></label>
 					<input type="number" id="min" name="min" min="0" max="59" required>
 					
-					<label for="salle"><b>salle: </b></label>
+					<label for="salle"><b>Salle: </b></label>
 					<input type="number" id="salle" name="salle" required>
 					</fieldset>
 					<fieldset id="s2">
-						<legend >Seance 2</legend>
+						<legend >Séance 2</legend>
 					<label for="date2"><b>Date: </b></label>
 					<input type="Date" id="date2" name="date2" >
 					
-					<label for="heur2"><b>Heur: </b></label>
+					<label for="heur2"><b>Heure: </b></label>
 					<input type="number" id="heur2" name="heur2" min="0" max="23">
 					
-					<label for="min2"><b>min: </b></label>
+					<label for="min2"><b>Min: </b></label>
 					<input type="number" id="min2" name="min2" min="0" max="59">
 					
-					<label for="salle2"><b>salle: </b></label>
+					<label for="salle2"><b>Salle: </b></label>
 					<input type="number" id="salle2" name="salle2">
 					</fieldset>
 					<label for="abs">Avoir Absence</label>
@@ -120,32 +120,32 @@
 		<div class="tableDiv">
 			<!--filterage option start-->
 			<div class="text">
-				<h3>les opetions de filtrage</h3>
+				<h3>Filtrer</h3>
 				<input type="text" id="myInput" onkeyup="search()"
 					placeholder="Recherche...">
 				<div style="clear: both"></div>
 				<div class="opt">
-					<label>sexe <select onselect="">
-							<option value="">Aucan</option>
+					<label>Sexe <select onselect="">
+							<option value="">Aucun</option>
 							<option value="Homme">Homme</option>
 							<option value="Femme">Femme</option>
 					</select>
-					</label> <label>situation Familiale <select onselect="">
-							<option value="">Aucan</option>
+					</label> <label>Situation Familiale <select onselect="">
+							<option value="">Aucun</option>
 							<option value="marié">marié</option>
 							<option value="divorcé">divorcé</option>
 							<option value="séparé">séparé</option>
 							<option value="célibataire">célibataire</option>
 							<option value="veuf">veuf</option>
 					</select>
-					</label> <label>Departement <select onselect="">
-							<option value="">Aucan</option>
+					</label> <label>Département <select onselect="">
+							<option value="">Aucun</option>
 							<option value="TLSI">TLSI</option>
 							<option value="IFA">IFA</option>
 							<option value="MI">MI</option>
 					</select>
 					</label> <label>Formation <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="GL">GL</option>
 							<option value="MI">MI</option>
 							<option value="SCI">SCI</option>
@@ -153,7 +153,7 @@
 							<option value="TI">TI</option>
 					</select>
 					</label> <label>Module <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="GL">GL</option>
 							<option value="MI">DAAW</option>
 							<option value="SCI">TL</option>
@@ -174,14 +174,14 @@
 
 						<table class="table table-hover">
 							<tr>
-								<th>idSeance</th>
-								<th>type</th>
-								<th>temp</th>
-								<th>salle</th>
-								<th>avoirAbs</th>
-								<th>idGroupe</th>
-								<th>abrModule</th>
-								<th>Operation</th>
+								<th>Id Séance</th>
+								<th>Type</th>
+								<th>Date et heure de seance</th>
+								<th>Salle</th>
+								<th>Avoir absence</th>
+								<th>Id Groupe</th>
+								<th>Abréviation de module</th>
+								<th>Opération</th>
 							</tr>
 
 							<c:forEach var="et" items="${sessionScope.Seances}">
@@ -221,7 +221,7 @@
 		</div>
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

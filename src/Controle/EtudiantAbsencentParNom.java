@@ -46,26 +46,34 @@ public class EtudiantAbsencentParNom extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		String role =request.getParameter("role");
+		System.out.println("username :"+(String) session.getAttribute("user"));
 		String nom = (String) session.getAttribute("nom");
 		String prenom = (String) session.getAttribute("prenom");
 		OperationEnseignent oe = new OperationEnseignent();
 		ArrayList<Absence> absences = oe.getAbsenceParNom(nom, prenom);
-		session.setAttribute("message","ajouter echoue");
+		session.setAttribute("message","L'ajout est échoué");
 		session.setAttribute("etat","échoué");
 		for(Absence a : absences) {
 			Part photo = request.getPart(a.getIdAbsence()+"");
 			if(photo!=null) {
 				InputStream justification = photo.getInputStream();
 				oe.insertJustification(a.getIdAbsence(), justification);
-				session.setAttribute("message","ajouter avec succes");
+				session.setAttribute("message","Ajouter avec success");
 				session.setAttribute("etat","Succès");
 			}
 		}
 		String username = (String) session.getAttribute("user");
 		ArrayList<EnseiModuleGroupe> r = oe.enseiModuleGroupe(username);
 		session.setAttribute("emg", r);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/EscapeEnseignant/listeSeancePourEnrJustification.jsp");
-		rd.forward(request, response);
+		if(role==null) {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/EscapeEnseignant/listeSeancePourEnrJustification.jsp");
+			rd.forward(request, response);
+		}
+		else {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/EspaceChef/enregistrerJustification.jsp");
+			rd.forward(request, response);
+		}
 	}
 
 }

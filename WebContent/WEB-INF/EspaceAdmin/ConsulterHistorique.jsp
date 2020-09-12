@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
 <jsp:include page="/WEB-INF/template/header.jsp" />
-<title>Consulter Historique</title>
+<title>Consulter l'Historique</title>
 </head>
 
 <body>
@@ -17,25 +17,25 @@
 
 		<!--title page with add button start-->
 		<div class="titlePage">
-			<h2>Consultation des Historiques</h2>
+			<h2>Consultation de l'historique</h2>
 		</div>
 		<!--title page with add button end-->
 		<!--table start-->
 		<div class="tableDiv">
 			<!--filterage option start-->
 			<div class="text">
-				<h3>les opetions de filtrage</h3>
+				<h3>Filtrer</h3>
 				<input type="text" id="myInput" onkeyup="search()"
 					placeholder="Recherche...">
 				<div style="clear: both"></div>
 				<div class="opt">
 					<label>sexe <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="Homme">Homme</option>
 							<option value="Femme">Femme</option>
 					</select>
 					</label> <label>situation Familiale <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="marié">marié</option>
 							<option value="divorcé">divorcé</option>
 							<option value="séparé">séparé</option>
@@ -43,18 +43,18 @@
 							<option value="veuf">veuf</option>
 					</select>
 					</label> <label>Grade <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="MaitreDeConférenceClasseA">MaitreDeConférenceClasseA</option>
 							<option value="MaitreDeConférenceClasseB">MaitreDeConférenceClasseB</option>
 					</select>
-					</label> <label>Departement <select onselect="">
-							<option value="">Aucan</option>
+					</label> <label>Département <select onselect="">
+							<option value="">Aucun</option>
 							<option value="TLSI">TLSI</option>
 							<option value="IFA">IFA</option>
 							<option value="MI">MI</option>
 					</select>
 					</label> <label>Formation <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="GL">GL</option>
 							<option value="MI">MI</option>
 							<option value="SCI">SCI</option>
@@ -62,7 +62,7 @@
 							<option value="TI">TI</option>
 					</select>
 					</label> <label>Module <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="GL">GL</option>
 							<option value="MI">DAAW</option>
 							<option value="SCI">TL</option>
@@ -71,7 +71,7 @@
 					</select>
 					</label>
 					</label> <label>Role <select onselect="">
-							<option value="">Aucan</option>
+							<option value="">Aucun</option>
 							<option value="GL">Admin</option>
 							<option value="MI">ENS</option>
 							<option value="SCI">RES</option>
@@ -85,16 +85,16 @@
 			<div class="table-responsive">
 				<c:choose>
 					<c:when test="${ empty sessionScope.Historiques}">
-						<h1 style="text-align: center">la liste vide</h1>
+						<h1 style="text-align: center">La liste vide</h1>
 					</c:when>
 					<c:otherwise>
 
 						<table class="table table-hover">
 							<tr>
-								<th>id Historique</th>
-								<th>username</th>
-								<th>date</th>
-								<th>action</th>
+								<th>Id Historique</th>
+								<th>Nom d'utilisateur</th>
+								<th>Date</th>
+								<th>Action</th>
 							</tr>
 
 							<c:forEach var="ens" items="${sessionScope.Historiques}">
@@ -125,7 +125,7 @@
 		</div>
 		<!--footer start-->
 		<div class="footer">
-			<p>tous les droits sont réservés © 2020</p>
+			<p>Tous droits réservés © 2020</p>
 		</div>
 		<!--sidebar end-->
 	</div>

@@ -63,12 +63,20 @@ public class EnregisterJustification extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String nom = request.getParameter("nom");
-		String prenom = request.getParameter("prenom");
 		OperationEnseignent oe = new OperationEnseignent();
-		ArrayList<Absence> absecnes = oe.getAbsenceParNom(nom, prenom);
 		HttpSession session = request.getSession();
-		session.setAttribute("absences", absecnes);
+		String nom = request.getParameter("nom");
+		System.out.println("nomm:"+nom);
+		String prenom = request.getParameter("prenom");
+		System.out.println("prenomm:"+prenom);
+		
+		String username = (String) session.getAttribute("user");
+		System.out.println("usere:"+username);
+		ArrayList<Integer> arg=new ArrayList<Integer>();
+		arg=oe.getIdGroupesDUnEnseignant(username);
+		
+		ArrayList<Absence> absences = oe.getAbsenceParNom(nom, prenom, arg);
+		session.setAttribute("absences", absences);
 		session.setAttribute("nom", nom);
 		session.setAttribute("prenom", prenom);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/EscapeEnseignant/ListeEtudiantParNom.jsp");

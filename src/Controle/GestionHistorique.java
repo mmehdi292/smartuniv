@@ -15,6 +15,7 @@ import Modele.Formation;
 import Modele.Historique;
 import Modele.Module;
 import Modele.OperationAdministrateur;
+import Modele.OperationChefDepartement;
 import Modele.OperationGlobale;
 
 /**
@@ -38,12 +39,35 @@ public class GestionHistorique extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		RequestDispatcher rd;
+		String username=(String) session.getAttribute("user");
+		System.out.println("useeeeeeeeeeeer servleeet"+username);
+		String role=request.getParameter("role");
 		OperationAdministrateur oa = new OperationAdministrateur();
-		OperationGlobale og = new OperationGlobale();
-		ArrayList<Historique> historiques = oa.consulterHistorique();
-		session.setAttribute("Historiques", historiques);
-		rd = request.getRequestDispatcher("/WEB-INF/EspaceAdmin/ConsulterHistorique.jsp");
-		rd.forward(request, response);
+		OperationChefDepartement og = new OperationChefDepartement();
+		if(role==null) {
+			System.out.println("servlet admin");
+			ArrayList<Historique> historiques = oa.consulterHistorique();
+			session.setAttribute("Historiques", historiques);
+			rd = request.getRequestDispatcher("/WEB-INF/EspaceAdmin/ConsulterHistorique.jsp");
+			rd.forward(request, response);
+		}
+		else {
+			System.out.println("servlet chef");
+			String departement=og.getNomDepartement(username);
+			System.out.println("departement =="+departement);
+			ArrayList<Historique> ar=new ArrayList<Historique>();
+			ArrayList<Historique> historiquesChef = og.consulterHistoriqueChef(departement);
+			for(Historique h:historiquesChef) {
+				String depart=og.getDepartementUtilisateur(h.getUsername());
+				if(depart!=null) {
+					if(depart.equals(departement)) ar.add(h);
+				}
+			}
+			session.setAttribute("HistoriquesChef", ar);
+			rd = request.getRequestDispatcher("/WEB-INF/EspaceChef/ConsulterHistorique.jsp");
+			rd.forward(request, response);
+		}
+		
 	}
 
 	/**

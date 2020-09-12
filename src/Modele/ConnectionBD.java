@@ -25,8 +25,8 @@ public class ConnectionBD {
 	public Statement state;
 	public ResultSet result;
 	public String user = "root";
-	public String pass = "root";
-	public String nameDatabase = "smartuniv";
+	public String pass = "ahmed555";
+	public String nameDatabase = "ates";
 
 	public ConnectionBD(String user, String pass, String nameDatabase) {
 		this.user = user;
@@ -80,8 +80,6 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select username,motDePass from Etudiant where username = '" + user
 					+ "' and motDePass = MD5('" + pass + "');");
-					//+ "' and motDePass = '" + pass + "';");
-
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -93,8 +91,6 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select username,motDePass from Responsable where username = '" + user
 					+ "' and motDePass = MD5('" + pass + "');");
-					//+ "' and motDePass = '" + pass + "';");
-
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -106,8 +102,6 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select username,motDePass from Enseignent where username = '" + user
 					+ "' and motDePass = MD5('" + pass + "');");
-					//+ "' and motDePass = '" + pass + "';");
-
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -119,8 +113,6 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select username,motDePass from Chef where username = '" + user
 					+ "' and motDePass = MD5('" + pass + "');");
-					//+ "' and motDePass = '" + pass + "';");
-
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -132,8 +124,6 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select username,motDePass from Administrateur where username = '" + user
 					+ "' and motDePass = MD5('" + pass + "');");
-					//+ "' and motDePass = '" + pass + "';");
-
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -145,8 +135,6 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select email,motDePass from Etudiant where email = '" + email
 					+ "' and motDePass = MD5('" + pass + "');");
-					//+ "' and motDePass = '" + pass + "';");
-
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -158,8 +146,6 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select email,motDePass from Responsable where email = '" + email
 					+ "' and motDePass = MD5('" + pass + "');");
-					//+ "' and motDePass = '" + pass + "';");
-
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -171,8 +157,6 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select email,motDePass from Enseignent where email = '" + email
 					+ "' and motDePass = MD5('" + pass + "');");
-					//+ "' and motDePass = '" + pass + "';");
-
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -184,8 +168,6 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select email,motDePass from Chef where email = '" + email
 					+ "' and motDePass = MD5('" + pass + "');");
-					//+ "' and motDePass = '" + pass + "';");
-
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -197,8 +179,6 @@ public class ConnectionBD {
 		try {
 			result = state.executeQuery("select email,motDePass from Administrateur where email = '" + email
 					+ "' and motDePass = MD5('" + pass + "');");
-					//+ "' and motDePass = '" + pass + "';");
-
 			return result.next() == true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -228,7 +208,6 @@ public class ConnectionBD {
 		}
 		return false;
 	}
-
 	public boolean insertToken(ResetMotDePass reset) {
 		try {
 			int res = state.executeUpdate("insert into ResetMotDePass (ResetCode,email) values ('"
@@ -389,7 +368,9 @@ public class ConnectionBD {
 	public boolean suppEnseignant(String username) {
 		int res = 0;
 		try {
-			String sql = "DELETE FROM Responsable WHERE username like \"" + username + "\";";
+			String sql = "DELETE FROM enseignentmodulesgroupe WHERE username like \"" + username + "\";";
+			res = state.executeUpdate(sql);
+			sql = "DELETE FROM Responsable WHERE username like \"" + username + "\";";
 			res = state.executeUpdate(sql);
 			sql = "DELETE FROM chef WHERE username like \"" + username + "\";";
 			res = state.executeUpdate(sql);
@@ -397,6 +378,7 @@ public class ConnectionBD {
 			res = state.executeUpdate(sql);
 			sql = "DELETE FROM enseignent WHERE username like \"" + username + "\";";
 			res = state.executeUpdate(sql);
+
 			System.out.println(res);
 		} catch (SQLException e) {
 			System.out.println("SQL");
@@ -963,16 +945,19 @@ public class ConnectionBD {
 
 	// supp etudiant
 	public boolean suppEtudiant(String username) {
-		int res = 0;
+		int res = 0,res2 = 0,res3 = 0;
 		try {
-			String sql = "DELETE FROM etudiant WHERE username like \"" + username + "\";";
+			String sql = "DELETE FROM absence WHERE username like \"" + username + "\";";
+			res3 = state.executeUpdate(sql);
+			sql = "DELETE FROM groupeetudiant WHERE username like \"" + username + "\";";
+			res2 = state.executeUpdate(sql);
+			sql = "DELETE FROM etudiant WHERE username like \"" + username + "\";";
 			res = state.executeUpdate(sql);
 		} catch (SQLException e) {
 			System.out.println("SQL");
 		}
-		return res == 1;
+		return (res == 1)&&(res2 == 1)&&(res3 == 1);
 	}
-
 	// get Enseignent
 	public Etudiant getEtudiant(String username) {
 		try {
@@ -1279,15 +1264,35 @@ public class ConnectionBD {
 		return false;
 	}
 
+	//-------------------------------
+	public String getDepartementUtilisateur(String username) {
+		String nomDepartement=null;
+		try {
+			result=state.executeQuery("select distinct departement from formation f,ENSEIGNENT e,enseignentmodulesgroupe emg,groupe g where f.abrformation=g.abrformation and g.idgroupe=emg.idgroupe and emg.username=e.username and e.username=\""+username+"\";");
+			if(result.next() == true) {System.out.println(result.getString(1)); return result.getString(1);}
+			result=state.executeQuery("select departement from formation,etudiant where etudiant.abrformation=formation.abrformation and username=\""+username+"\";");
+			if(result.next() == true) { System.out.println(result.getString(1));return result.getString(1);}
+			
+		} catch (SQLException e) {
+			System.out.println("catch bd getDeparementUtilisateur");
+			e.printStackTrace();
+		}
+		return nomDepartement;
+	}
+	
+	
+	
+
 	// ---------------------------- gestion historique -----------------
 	// consulter historique
-	public ArrayList<Historique> consulterHistorique() {
+	public ArrayList<Historique> consulterHistoriqueChef(String departement) {
 		ArrayList<Historique> historiques = new ArrayList<Historique>();
 		try {
 			result = state.executeQuery("SELECT * FROM historique;");
 			while (result.next()) {
 				int id = result.getInt(1);
 				String username = result.getString(2);
+				System.out.println("utilisateur:"+username);
 				Date date = result.getTimestamp(3);
 				String action = result.getString(4);
 				Historique his = new Historique(id, username, date, action);
@@ -1295,12 +1300,33 @@ public class ConnectionBD {
 			}
 			return historiques;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
-
+	
+	// ---------------------------- gestion historique -----------------
+		// consulter historique
+		public ArrayList<Historique> consulterHistorique() {
+			System.out.println("BD admin historique");
+			ArrayList<Historique> historiques = new ArrayList<Historique>();
+			try {
+				result = state.executeQuery("SELECT * FROM historique;");
+				while (result.next()) {
+					int id = result.getInt(1);
+					String username = result.getString(2);
+					Date date = result.getTimestamp(3);
+					String action = result.getString(4);
+					Historique his = new Historique(id, username, date, action);
+					historiques.add(his);
+				}
+				return historiques;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
 	// ---------------------------- gestion Seance -----------------
 	// consulter seance
 	public ArrayList<Seance> consulterSeances() {
@@ -1599,50 +1625,16 @@ public class ConnectionBD {
 		return res == 1;
 	}
 
-	// get touts les seances d'un enseignant
-	public ArrayList<EnseiModuleGroupe> enseiModuleGroupe(String username) {
-		ArrayList<EnseiModuleGroupe> s = new ArrayList<EnseiModuleGroupe>();
-		try {
-			result = state.executeQuery("SELECT * FROM enseignentmodulesgroupe e, groupe g, module m WHERE username = '"+ username + "' and g.idGroupe = e.idGroupe and m.abrModule = e.abrModule;");
-			while (result.next()) {
-				String abr = result.getString("abrModule");
-				int idGroupe = result.getInt("idGroupe");
-				int numGroupe = result.getInt("numGroupe");
-				int section = result.getInt("section");
-				String abrFormation = result.getString("abrFormation");
-				String nomModule = result.getString("nomModule");
-				int semester = result.getInt("semester");
-				String t = result.getString("type");
-				TypeSeance type = TypeSeance.COUR;
 
-				switch (t) {
-				case "TD":
-					type = TypeSeance.TD;
-					break;
-				case "TP":
-					type = TypeSeance.TP;
-					break;
-				}
-				Groupe g = new Groupe(idGroupe, numGroupe, section, new Formation(abrFormation));
-				Module m = new Module(nomModule, abr, semester, new Formation(abrFormation));
-				EnseiModuleGroupe en = new EnseiModuleGroupe(m, g, type);
-				s.add(en);
-			}
-			return s;
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		return null;
-	}
-
-	// get touts les seances d'un modules de un groupe
+	// get touts les seances d'un modules d'un groupe
 	public ArrayList<Seance> getSeances(int groupe, String abr, String t) {
 		ArrayList<Seance> s = new ArrayList<Seance>();
 		try {
-			result = state.executeQuery("SELECT * FROM seance WHERE abrModule = '"+abr+"' and type='"+t+"' and idgroupe = '"+groupe+"';");
+			//result = state.executeQuery("SELECT * FROM seance,absence WHERE seance.idseance=absence.idseance and justifier=0 and abrModule = '"+abr+"' and type='"+t+"' and idgroupe = '"+groupe+"' group by seance.idseance;");
+			result = state.executeQuery("SELECT * FROM seance,absence WHERE seance.idseance=absence.idseance and justifier=0 and abrModule = '"+abr+"' and type='"+t+"' and idgroupe = '"+groupe+"' group by seance.idseance;");
 			while (result.next()) {
 				int idSeance = result.getInt("idSeance");
-				
+				InputStream justification = result.getBinaryStream("justification");
 				Date date = result.getTimestamp("temp");
 				int salle = result.getInt("salle");
 				boolean avoirAbs = result.getBoolean("avoirAbs");
@@ -1658,6 +1650,7 @@ public class ConnectionBD {
 				Groupe g = new Groupe(groupe);
 				Module m = new Module(abr);
 				Seance seance = new Seance(idSeance,type,date,salle,avoirAbs,g,m);
+				if(justification==null)
 				s.add(seance);
 			}
 			System.out.println("KO");
@@ -1667,6 +1660,37 @@ public class ConnectionBD {
 		}
 		return null;
 	}
+	 public ArrayList<Seance> getSeancesPourFaireAppel(int groupe, String abr, String t){
+		 ArrayList<Seance> s = new ArrayList<Seance>();
+			try {
+				result = state.executeQuery("SELECT * FROM seance WHERE abrModule = '"+abr+"' and type='"+t+"' and idgroupe = '"+groupe+"';");
+				while (result.next()) {
+					int idSeance = result.getInt("idSeance");
+					
+					Date date = result.getTimestamp("temp");
+					int salle = result.getInt("salle");
+					boolean avoirAbs = result.getBoolean("avoirAbs");
+					TypeSeance type = TypeSeance.COUR;
+					switch (t) {
+					case "TD":
+						type = TypeSeance.TD;
+						break;
+					case "TP":
+						type = TypeSeance.TP;
+						break;
+					}
+					Groupe g = new Groupe(groupe);
+					Module m = new Module(abr);
+					Seance seance = new Seance(idSeance,type,date,salle,avoirAbs,g,m);
+					s.add(seance);
+				}
+				System.out.println("KO");
+				return s;
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+			return null;
+	 }
 	// touts les etudiants d'un groupe
 	public ArrayList<Etudiant> getEtudiantGroupe(int idgroupe){
 		ArrayList<Etudiant> s = new ArrayList<Etudiant>();
@@ -1733,13 +1757,16 @@ public class ConnectionBD {
 	public  ArrayList<Absence> getAbsencesDunSeance(int idseance){
 		ArrayList<Absence> s = new ArrayList<Absence>();
 		try {
-			result = state.executeQuery("SELECT * FROM absence  WHERE idSeance = "+idseance+" ;");
+			result = state.executeQuery("SELECT * FROM absence,seance  WHERE absence.idseance=seance.idseance and justification!=null and seance.idSeance = "+idseance+" ;");
 			while (result.next()) {
 				int idAbsence = result.getInt("idAbsence");
 				boolean justifier = result.getBoolean("justifier");
-				InputStream photo = result.getBinaryStream("justification");
 				String username = result.getString("username");
+				
+				InputStream photo = result.getBinaryStream("justification");
 				Absence a = new Absence(idAbsence,justifier,new Seance(idseance),photo,new Etudiant(username));
+				System.out.println("photo :"+photo);
+				//if(photo==null)
 				s.add(a);
 			}
 			return s;
@@ -1748,10 +1775,10 @@ public class ConnectionBD {
 		}
 		return null;
 	}
-	public  ArrayList<Absence> getAbsencesDunSeanceAvacEtudaint(int idseance){
+	public  ArrayList<Absence> getAbsencesDunSeanceAvecEtudiant(int idseance){
 		ArrayList<Absence> s = new ArrayList<Absence>();
 		try {
-			result = state.executeQuery("SELECT * FROM absence a, Etudiant e WHERE a.idSeance = "+idseance+" AND e.username = a.username;");
+			result = state.executeQuery("SELECT * FROM absence a, Etudiant e,seance s WHERE s.idseance=a.idseance and a.idSeance = "+idseance+" AND justifier=0 and e.username = a.username;");
 			System.out.println("I am here");
 			while (result.next()) {
 				int idAbsence = result.getInt("idAbsence");
@@ -1760,8 +1787,9 @@ public class ConnectionBD {
 				String username = result.getString("username");
 				String nom = result.getString("nom");
 				String prenom = result.getString("prenom");
-				Absence a = new Absence(idAbsence,justifier,new Seance(idseance),photo,new Etudiant(username,nom,prenom));
+				Absence a = new Absence(idAbsence,justifier,new Seance(idseance),photo,new Etudiant(nom,prenom,username));
 				System.out.println(a.getEtudiants().getUsername());
+				if(photo==null)
 				s.add(a);
 			}
 			return s;
@@ -1804,42 +1832,7 @@ public class ConnectionBD {
 		}
 		return false;
 	}
-	public  ArrayList<Absence> getAbsenceParNom(String nom,String prenom){
-		ArrayList<Absence> s = new ArrayList<Absence>();
-		try {
-			result = state.executeQuery("SELECT * FROM absence a, Etudiant e, seance s WHERE e.nom='"+nom+"' AND e.prenom='"+prenom+"' AND e.username = a.username AND s.idseance = a.idseance ;");
-			while (result.next()) {
-				int idAbsence = result.getInt("idAbsence");
-				int idseance = result.getInt("idseance");
-				boolean justifier = result.getBoolean("justifier");
-				InputStream photo = result.getBinaryStream("justification");
-				String username = result.getString("username");
-				String t = result.getString("type");
-				TypeSeance type = TypeSeance.COUR;
-				switch (t) {
-				case "TD":
-					type = TypeSeance.TD;
-					break;
-				case "TP":
-					type = TypeSeance.TP;
-					break;
-				}
-				Date date = result.getTimestamp("temp");
-				int salle = result.getInt("salle");
-				boolean avoirAbs = result.getBoolean("avoirAbs");
-				int idGroupe = result.getInt("idGroupe");
-				String abrModule = result.getString("abrModule");
-
-			
-				Absence a = new Absence(idAbsence,justifier,new Seance(idseance,type,date,salle,avoirAbs,new Groupe(idGroupe),new Module(abrModule)),photo,new Etudiant(nom,prenom,username));
-				s.add(a);
-			}
-			return s;
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		return null;
-	}
+	
 	public  ArrayList<Absence> getAbsenceParUsername(String username){
 		ArrayList<Absence> s = new ArrayList<Absence>();
 		try {
@@ -1957,6 +1950,41 @@ public class ConnectionBD {
 		}
 		return false;
 	}
+	public  ArrayList<Absence> getAbsenceParNom(String nom,String prenom){
+		ArrayList<Absence> s = new ArrayList<Absence>();
+		try {
+			result = state.executeQuery("SELECT * FROM absence a, Etudiant e, seance s WHERE e.nom='"+nom+"' AND e.prenom='"+prenom+"' AND e.username = a.username AND s.idseance = a.idseance and justifier=0 ;");
+			while (result.next()) {
+				int idAbsence = result.getInt("idAbsence");
+				int idseance = result.getInt("idseance");
+				boolean justifier = result.getBoolean("justifier");
+				InputStream photo = result.getBinaryStream("justification");
+				String username = result.getString("username");
+				String t = result.getString("type");
+				TypeSeance type = TypeSeance.COUR;
+				switch (t) {
+				case "TD":
+					type = TypeSeance.TD;
+					break;
+				case "TP":
+					type = TypeSeance.TP;
+					break;
+				}
+				Date date = result.getTimestamp("temp");
+				int salle = result.getInt("salle");
+				boolean avoirAbs = result.getBoolean("avoirAbs");
+				int idGroupe = result.getInt("idGroupe");
+				String abrModule = result.getString("abrModule");
+				Absence a = new Absence(idAbsence,justifier,new Seance(idseance,type,date,salle,avoirAbs,new Groupe(idGroupe),new Module(abrModule)),photo,new Etudiant(nom,prenom,username));
+				s.add(a);
+			}
+			return s;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
 	//les ensignant deja affecter
 	public ArrayList<EnseiModuleGroupe> getAffectationDunModule(String abrModule){
 		ArrayList<EnseiModuleGroupe> s = new ArrayList<EnseiModuleGroupe>();
@@ -2767,6 +2795,7 @@ public class ConnectionBD {
 							Groupe g=new Groupe(numGroupe);
 							Module m=new Module(abrModule);
 							Formation f=new Formation(abrFormation);
+
 							Etudiant e=new Etudiant(username,nom,prenom,f);
 							Seance s=new Seance(idSeance,ty,d,ab,g,m);
 							Absence a=new Absence(idAbsence,s,e);
@@ -2782,5 +2811,319 @@ public class ConnectionBD {
 					return ae;
 				}
 				
+				
+				public ArrayList<Seance> seanceModuleGroupeDep(String departement) {
+					ArrayList<Seance> s = new ArrayList<Seance>();
+					try {
+						result = state.executeQuery("SELECT DISTINCT justification,s.abrmodule,g.numgroupe, s.idGroupe,type,f.abrformation FROM groupe g, module m,seance s,absence a, formation f WHERE a.idseance=s.idseance and f.departement = '"+ departement + "' and s.idgroupe=g.idgroupe and g.abrformation = f.abrformation and m.abrFormation=f.abrFormation and justifier=0 order by numGroupe;");						
+						while (result.next()) {
+							String abr = result.getString("abrModule");
+							int numGroupe = result.getInt("numGroupe");
+							String abrFormation = result.getString("abrFormation");
+							String t = result.getString("type");
+							int idGroupe = result.getInt("idGroupe");
+
+							TypeSeance type = TypeSeance.COUR;
+
+							switch (t) {
+							case "TD":
+								type = TypeSeance.TD;
+								break;
+							case "TP":
+								type = TypeSeance.TP;
+								break;
+							}
+							InputStream justification = result.getBinaryStream("justification");
+							Groupe g = new Groupe(idGroupe,new Formation(abrFormation),numGroupe);
+							Module m = new Module(abr);
+							Seance se=new Seance(type,g,m);
+							if(justification==null)
+							s.add(se);
+						}
+						return s;
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+					return null;
+				}
+				
+				public ArrayList<Absence> listeAbsencesJustifie(String Departement){
+					ArrayList<Absence> s = new ArrayList<Absence>();
+					try {
+						result = state.executeQuery("SELECT * FROM absence a, etudiant e, groupe g, seance s, module m, formation f WHERE a.idseance = s.idseance AND a.username = e.username AND g.idgroupe = s.idgroupe AND s.abrModule = m.abrModule AND m.abrFormation=f.abrFormation AND justifier=0 and f.Departement = '"+Departement+"' order by e.username;");
+						while (result.next()) {
+							int idAbsence = result.getInt("idAbsence");
+							int idSeance = result.getInt("idSeance");							
+							String t = result.getString("type");
+							TypeSeance type = TypeSeance.COUR;
+							switch (t) {
+							case "TD":
+								type = TypeSeance.TD;
+								break;
+							case "TP":
+								type = TypeSeance.TP;
+								break;
+							}
+							Date date = result.getTimestamp("temp");
+							boolean avoirAbs = result.getBoolean("avoirAbs");
+							int idGroupe = result.getInt("idGroupe");
+							int numGroupe = result.getInt("numGroupe");
+							String abrFormation = result.getString("abrFormation");
+							String abrModule = result.getString("abrModule");
+							InputStream justification = result.getBinaryStream("justification");
+							String username = result.getString("username");
+							String nom = result.getString("nom");
+							String prenom = result.getString("prenom");
+							
+							Formation f = new Formation(abrFormation);
+							Module m = new Module(abrModule);
+							Groupe g = new Groupe(idGroupe,numGroupe);
+							Etudiant e1 = new Etudiant(username,nom,prenom,f);
+							
+							Absence a = new Absence(idAbsence,justification,new Seance(idSeance,type,date,avoirAbs,g,m),e1);
+							if(justification!=null)
+							s.add(a);
+						}
+						return s;
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+					return null;
+				}
+				
+				
+				public Absence getAbsence(int idAbsence){
+					Absence a=null;
+					try {
+						result = state.executeQuery("SELECT * FROM absence a, etudiant e, groupe g, seance s, module m WHERE a.idseance = s.idseance AND a.username = e.username AND g.idgroupe = s.idgroupe AND s.abrModule = m.abrModule and a.idAbsence = '"+idAbsence+"' ;");
+						if (result.next()) {
+							int idSeance = result.getInt("idSeance");							
+							String t = result.getString("type");
+							TypeSeance type = TypeSeance.COUR;
+							switch (t) {
+							case "TD":
+								type = TypeSeance.TD;
+								break;
+							case "TP":
+								type = TypeSeance.TP;
+								break;
+							}
+							Date date = result.getTimestamp("temp");
+							boolean avoirAbs = result.getBoolean("avoirAbs");
+							int idGroupe = result.getInt("idGroupe");
+							int numGroupe = result.getInt("numGroupe");
+							String abrFormation = result.getString("abrFormation");
+							String abrModule = result.getString("abrModule");
+							InputStream justification = result.getBinaryStream("justification");
+							String username = result.getString("username");
+							String nom = result.getString("nom");
+							String prenom = result.getString("prenom");
+							
+							Formation f = new Formation(abrFormation);
+							Module m = new Module(abrModule);
+							Groupe g = new Groupe(idGroupe,numGroupe);
+							Etudiant e1 = new Etudiant(nom,prenom,username,f);
+							
+							a = new Absence(idAbsence,justification,new Seance(idSeance,type,date,avoirAbs,g,m),e1);
+						}
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+					return a;
+				}
+				
+				public boolean accepterJustification(int idAbsence){
+					int result=0;
+					try {
+						result=state.executeUpdate("update absence set justifier=1 where idAbsence=\""+idAbsence+"\" ;");
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					System.out.println("result = "+result);
+					if(result==1) 
+					System.out.println("envoie email :la justification de l'absence idAbsence=... a été acceptée");
+					
+					return result==1;
+				}
+				
+				public boolean refuserJustification(int idAbsence){
+					int result=0;
+					try {
+						result=state.executeUpdate("update absence set justifier=0,justification=null where idAbsence=\""+idAbsence+"\" ;");
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					System.out.println("result = "+result);
+					if(result==1) 
+					System.out.println("envoie email la justification de l'absence idAbsence=... a été refusée");
+					
+					return result==1;
+				}
+				public ArrayList<Absence> getAbsenceParNom(String nom, String prenom, String departement) {
+					ArrayList<Absence> s = new ArrayList<Absence>();
+					try {			
+						result = state.executeQuery("SELECT * FROM absence a, Etudiant e, seance s, formation f WHERE f.abrformation=e.abrformation and f.departement='"+departement+"' and e.nom='"+nom+"' AND e.prenom='"+prenom+"' AND e.username = a.username AND s.idseance = a.idseance and justifier=0 ;");
+						while (result.next()) {
+							int idAbsence = result.getInt("idAbsence");
+							int idseance = result.getInt("idseance");
+							boolean justifier = result.getBoolean("justifier");
+							InputStream photo = result.getBinaryStream("justification");
+							String username = result.getString("username");
+							String t = result.getString("type");
+							TypeSeance type = TypeSeance.COUR;
+							switch (t) {
+							case "TD":
+								type = TypeSeance.TD;
+								break;
+							case "TP":
+								type = TypeSeance.TP;
+								break;
+							}
+							Date date = result.getTimestamp("temp");
+							int salle = result.getInt("salle");
+							boolean avoirAbs = result.getBoolean("avoirAbs");
+							int idGroupe = result.getInt("idGroupe");
+							String abrModule = result.getString("abrModule");
+							Absence a = new Absence(idAbsence,justifier,new Seance(idseance,type,date,salle,avoirAbs,new Groupe(idGroupe),new Module(abrModule)),photo,new Etudiant(nom,prenom,username));
+							s.add(a);
+						}
+						return s;
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+					return null;
+				}
+				
+				public ArrayList<Integer> getIdGroupesDUnEnseignant(String username) {
+					ArrayList<Integer> groupes=new ArrayList<Integer>();
+					try {
+						result=state.executeQuery("select g.idgroupe from groupe g,enseignentmodulesgroupe emg,enseignent e where g.idgroupe=emg.idgroupe and e.username=emg.username and e.username='"+username+"';");
+					while (result.next()) {
+						int idGroupe = result.getInt(1);
+						groupes.add(idGroupe);
+					}
+					return groupes;
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+					return null;	
+				}
+				
+				public  ArrayList<Absence> getAbsenceParNom(String nom,String prenom,ArrayList<Integer> arg){
+					ArrayList<Absence> s = new ArrayList<Absence>();
+					try {			
+						result = state.executeQuery("SELECT * FROM absence a, Etudiant e, seance s WHERE e.nom='"+nom+"' AND e.prenom='"+prenom+"' AND e.username = a.username AND s.idseance = a.idseance and justifier=0 ;");
+						while (result.next()) {
+							int idAbsence = result.getInt("idAbsence");
+							int idseance = result.getInt("idseance");
+							boolean justifier = result.getBoolean("justifier");
+							InputStream photo = result.getBinaryStream("justification");
+							String username = result.getString("username");
+							String t = result.getString("type");
+							TypeSeance type = TypeSeance.COUR;
+							switch (t) {
+							case "TD":
+								type = TypeSeance.TD;
+								break;
+							case "TP":
+								type = TypeSeance.TP;
+								break;
+							}
+							System.out.println("nom:"+nom);
+							System.out.println("prenom:"+prenom);
+							System.out.println("username:"+username);
+							Date date = result.getTimestamp("temp");
+							int salle = result.getInt("salle");
+							boolean avoirAbs = result.getBoolean("avoirAbs");
+							int idGroupe = result.getInt("idGroupe");
+							String abrModule = result.getString("abrModule");
+							Absence a = new Absence(idAbsence,justifier,new Seance(idseance,type,date,salle,avoirAbs,new Groupe(idGroupe),new Module(abrModule)),photo,new Etudiant(nom,prenom,username));
+							for(int i:arg) {
+								if(idGroupe==i) {
+									s.add(a);break;
+								}
+							}
+							
+						}
+						return s;
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+					return null;
+				}
+				
+				// get touts les seances d'un enseignant qui ont des absences
+				public ArrayList<EnseiModuleGroupe> enseiModuleGroupe(String username) {
+					ArrayList<EnseiModuleGroupe> s = new ArrayList<EnseiModuleGroupe>();
+					try {
+						result = state.executeQuery("SELECT distinct justification,s.idgroupe, g.numgroupe,g.abrformation,s.type,s.abrmodule FROM enseignentmodulesgroupe e, groupe g, module m, seance s, absence a WHERE e.username = '"+ username + "' and g.idGroupe = e.idGroupe and m.abrModule = e.abrModule and s.idgroupe=g.idgroupe and s.idseance=a.idseance and justifier=0;");
+						while (result.next()) {
+							String abr = result.getString("abrModule");
+							int idGroupe = result.getInt("idGroupe");
+							int numGroupe = result.getInt("numGroupe");
+							InputStream justification = result.getBinaryStream("justification");
+							//int section = result.getInt("section");
+							String abrFormation = result.getString("abrFormation");
+							//String nomModule = result.getString("nomModule");
+							//int semester = result.getInt("semester");
+							String t = result.getString("type");
+							TypeSeance type = TypeSeance.COUR;
+
+							switch (t) {
+							case "TD":
+								type = TypeSeance.TD;
+								break;
+							case "TP":
+								type = TypeSeance.TP;
+								break;
+							}
+							Groupe g = new Groupe(idGroupe, new Formation(abrFormation),numGroupe);
+							Module m = new Module(abr);
+							EnseiModuleGroupe en = new EnseiModuleGroupe(m, g, type);
+							if(justification==null)
+							s.add(en);
+						}
+						return s;
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+					return null;
+				}
+				// get touts les seances d'un enseignant
+				public ArrayList<EnseiModuleGroupe> enseiModuleGroupePourFaireAppel(String username) {
+					ArrayList<EnseiModuleGroupe> s = new ArrayList<EnseiModuleGroupe>();
+					try {
+						result = state.executeQuery("SELECT * FROM enseignentmodulesgroupe e, groupe g, module m WHERE username = '"+ username + "' and g.idGroupe = e.idGroupe and m.abrModule = e.abrModule;");
+						while (result.next()) {
+							String abr = result.getString("abrModule");
+							int idGroupe = result.getInt("idGroupe");
+							int numGroupe = result.getInt("numGroupe");
+							int section = result.getInt("section");
+							String abrFormation = result.getString("abrFormation");
+							String nomModule = result.getString("nomModule");
+							int semester = result.getInt("semester");
+							String t = result.getString("type");
+							TypeSeance type = TypeSeance.COUR;
+							switch (t) {
+							case "TD":
+								type = TypeSeance.TD;
+								break;
+							case "TP":
+								type = TypeSeance.TP;
+								break;
+							}
+							Groupe g = new Groupe(idGroupe, numGroupe, section, new Formation(abrFormation));
+							Module m = new Module(nomModule, abr, semester, new Formation(abrFormation));
+							EnseiModuleGroupe en = new EnseiModuleGroupe(m, g, type);
+							s.add(en);
+						}
+						return s;
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+					return null;
+				}
+
 
 }
